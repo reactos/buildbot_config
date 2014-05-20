@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# Parameter $1 - Attachment ID
+
+if [ "$1" = "" ]; then
+    echo "Skipping patch phase"
+    exit 0
+fi
+
+wget -q --output-document=default.patch "http://jira.reactos.org/secure/attachment/$1/"
+
+if ! grep -q "Index:" default.patch; then
+    echo "Not a patch file!"
+    exit 1
+fi
+
+patch -u -i default.patch -p0 --verbose --dry-run > check.txt
+echo "ERR: $?"
+
+if grep -q "FAILED --" check.txt; then
+    echo "Applying patch failed!"
+    exit 1
+fi
+
+patch -u -i default.patch --verbose -p0
+echo "ERR: $?"

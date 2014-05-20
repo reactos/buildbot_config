@@ -1,0 +1,25 @@
+#!/bin/bash
+
+process_directory()
+{
+	local directory="$1"
+
+	# SVN Revert the directory
+	svn revert "$directory" -R --non-interactive
+
+	# Clean unknown files
+	svn status "$directory" | while read line; do
+		if [ "${line:0:1}" = "?" ]; then
+			echo $line | awk '{print $2}' | xargs rm -f
+		fi
+	done
+}
+
+if ! [ -e "COPYING" ]; then
+    echo "Exiting, no tree checked out"
+    exit 0
+fi
+
+process_directory "$PWD"
+process_directory "$PWD/modules/rostests"
+exit 0
