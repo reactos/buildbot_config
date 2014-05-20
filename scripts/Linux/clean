@@ -3,7 +3,7 @@ source ../../config.inc
 
 if [ -d "$WORKDIR" ]; then
 	cd "$WORKDIR"
-	/usr/local/RosBE-2.0/clean.sh
+	/usr/local/RosBE/clean.sh
 else
 	echo "Creating $WORKDIR..."
 	mkdir "$WORKDIR"

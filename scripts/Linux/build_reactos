@@ -3,6 +3,5 @@ source ../../config.inc
 
 $TIME bash -c "(
 	cd $ROS_OUTPUT/reactos
-#	make $J $@
 	ninja $@
 )"
