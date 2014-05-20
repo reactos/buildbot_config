@@ -1,0 +1,23 @@
+#!/bin/bash
+source ../../config.inc
+
+rm -rf modules/optional
+
+$TIME bash -c "(
+	mkdir -p $CCACHE_DIR
+	ccache -M 4G
+	mkdir -p $ROS_OUTPUT
+	cd $ROS_OUTPUT
+	mkdir -p host-tools
+	mkdir -p reactos
+
+	cd host-tools
+	rm -f CMakeCache.txt
+#	cmake -G 'Unix Makefiles' -DARCH=$ROS_ARCH $SOURCEDIR
+	cmake -G 'Ninja' -DARCH=$ROS_ARCH $SOURCEDIR
+
+	cd ../reactos
+	rm -f CMakeCache.txt
+#	cmake -G 'Unix Makefiles' -DENABLE_CCACHE=1 -DPCH=0 -DCMAKE_TOOLCHAIN_FILE=toolchain-gcc.cmake -DARCH=$ROS_ARCH -DREACTOS_BUILD_TOOLS_DIR=$ROS_OUTPUT/host-tools $SOURCEDIR
+	cmake -G 'Ninja' -DENABLE_CCACHE=1 -DPCH=0 -DUSE_PSEH3=1 -DCMAKE_TOOLCHAIN_FILE=toolchain-gcc.cmake -DARCH=$ROS_ARCH -DREACTOS_BUILD_TOOLS_DIR=$ROS_OUTPUT/host-tools $SOURCEDIR
+)"

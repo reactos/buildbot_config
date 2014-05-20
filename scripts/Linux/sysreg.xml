@@ -1,0 +1,30 @@
+<settings vm="ReactOS-CMake" file="/srv/buildbot_cmake/reactos.xml">
+	<general>
+		<!-- Use KVM, VMwarePlayer or VMwareGSX -->
+		<vm type="kvm"/>
+
+		<!-- kill the VM after n milliseconds without debug msg -->
+		<timeout ms="180000"/>
+
+		<!-- kill the test process if it takes more than n seconds
+		     The VM will be killed even if it is still verbose -->
+		<globaltimeout s="3600"/>
+
+		<!-- size of the hdd image in MB -->
+		<hdd size="2048"/>
+
+		<!-- Maximum number of line cache hits allowed before we cancel this test and proceed with the next one.
+		See "console.c" code for more details. -->
+		<maxcachehits value="2000" />
+
+		<!-- Maximum number of retries allowed before we cancel the entire testing process. -->
+		<maxretries value="15" />
+	</general>
+	<firststage bootdevice="cdrom">
+	</firststage>
+	<secondstage bootdevice="cdrom">
+	</secondstage>
+	<thirdstage bootdevice="cdrom">
+		<success on="SYSREG_CHECKPOINT:THIRDBOOT_COMPLETE"/>
+	</thirdstage>
+</settings>

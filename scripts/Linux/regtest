@@ -1,0 +1,13 @@
+#!/bin/bash
+source ../../config.inc
+
+if [ "$1" = "" ]; then
+	echo "* Got no revision number, testing the last one in the directory."
+else
+	echo "* Testing revision $1."
+	cp ../isos/bootcdregtest-$1.iso ../bootcdregtest.iso
+fi
+
+# No more lines after this or we won't get the exit code
+#valgrind --tool=memcheck --leak-check=full /srv/buildbot/sysreg2 ../../sysreg.xml
+../../sysreg2 ../../sysreg.xml

@@ -1,0 +1,12 @@
+#!/bin/bash
+source ../../config.inc
+source ../../credentials.inc
+
+if [ "$1" = "" ]; then
+	echo "Please specify the build number!"
+	exit 1
+fi
+
+echo "* Transferring winetest results for build $1."
+echo "* Using builder $TESTMAN_BUILDER."
+wget -q -O - "http://www.reactos.org/testman/webservice/buildbot_aggregator.php?sourceid=$TESTMAN_ID&password=$TESTMAN_PASS&builder=$TESTMAN_BUILDER&platform=0&build=$1"

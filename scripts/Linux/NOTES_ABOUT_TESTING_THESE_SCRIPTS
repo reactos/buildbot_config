@@ -1,0 +1,8 @@
+You can easily test these scripts as follows:
+  * Move to /srv/buildbot/full/build
+  * Run "sudo -u buildbot ../../SCRIPTNAME"
+
+Look into the master.cfg file to determine what scripts are run in which order and with which parameters.
+
+
+- Colin, 2011-10-04

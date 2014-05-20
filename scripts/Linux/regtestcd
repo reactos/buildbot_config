@@ -1,0 +1,17 @@
+#!/bin/bash
+source ../../config.inc
+
+if [ "$1" = "" ]; then
+	echo "Please specify the revision number!"
+	exit 1
+fi
+
+#rm -rf modules/optional
+#cp -R ../../deps modules/optional
+
+mv modules/rostests_disabled modules/rostests
+../../configure
+cp -R ../../deps modules/optional
+../../build_reactos bootcdregtest
+mv modules/rostests modules/rostests_disabled
+mv $ROS_OUTPUT/reactos/bootcdregtest.iso ../../dbgtest_cmake/isos/bootcdregtest-$1.iso

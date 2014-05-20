@@ -1,0 +1,8 @@
+#!/bin/bash
+source ../../config.inc
+
+$TIME bash -c "(
+	cd $ROS_OUTPUT/host-tools
+#	make $J
+	ninja
+)"
