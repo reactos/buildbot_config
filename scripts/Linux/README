@@ -1,0 +1,28 @@
+ReactOS BuildBot Build Scripts for Linux
+========================================
+
+These scripts can be used for the following types of Buildslaves:
+
+* Plainbot: Can build, in any combination, Boot-CDs, Live-CDs, Test-CDs, trigger Testbots for testing them and upload the created ISO files
+* Testbot:  Triggered by a Plainbot, performs regression testing on a Test-CD and submits the results 
+* Patchbot: Applies a patch, builds a Test-CD, performs regression-testing and submits the results
+
+
+Add the following steps in this order to the Buildmaster's master.cfg depending on what type of Buildslave you want to set up:
+
+Step                                   | Plainbot | Testbot | Patchbot |
+------------------------------------------------------------------------
+clean                                      YES                  YES
+revert                                                          YES
+source.SVN update for trunk/reactos        YES                  YES
+source.SVN update for trunk/rostests     OPTIONAL               YES
+patching                                                        YES
+configure                                  YES                  YES
+build_host_tools                           YES                  YES
+build_reactos bootcd                     OPTIONAL
+build_reactos livecd                     OPTIONAL
+regtestcd                                OPTIONAL               YES
+Trigger Testbot                          OPTIONAL
+regtest                                               YES       YES
+submit_result                                         YES       YES
+uploadiso                                OPTIONAL

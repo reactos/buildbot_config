@@ -1,4 +1,6 @@
 #!/bin/bash
+# ReactOS BuildBot Build Scripts for Linux
+# clean - Get our working copy back to a defined state. (no output, all modules disabled)
 source ../../config.inc
 
 if [ -d "$WORKDIR" ]; then
@@ -8,3 +10,8 @@ else
 	echo "Creating $WORKDIR..."
 	mkdir "$WORKDIR"
 fi
+
+# Disable additional modules
+rm -rf modules/optional
+mv modules/rostests modules/rostests_disabled 2>/dev/null
+exit 0

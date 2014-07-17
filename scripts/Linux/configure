@@ -1,7 +1,7 @@
 #!/bin/bash
+# ReactOS BuildBot Build Scripts for Linux
+# configure - Set up the environment for building and let CMake generate build files.
 source ../../config.inc
-
-rm -rf modules/optional
 
 $TIME bash -c "(
 	mkdir -p $CCACHE_DIR

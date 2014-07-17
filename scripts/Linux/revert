@@ -1,4 +1,6 @@
 #!/bin/bash
+# ReactOS BuildBot Build Scripts for Linux
+# revert - Revert any patches that may have been applied.
 
 process_directory()
 {
@@ -21,5 +23,5 @@ if ! [ -e "COPYING" ]; then
 fi
 
 process_directory "$PWD"
-process_directory "$PWD/modules/rostests"
+process_directory "$PWD/modules/rostests_disabled"
 exit 0
