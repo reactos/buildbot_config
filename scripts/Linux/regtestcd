@@ -1,12 +1,9 @@
 #!/bin/bash
 # ReactOS BuildBot Build Scripts for Linux
 # regtestcd - Enable optional and rostests modules and build a bootcdregtest.
+#
+# Parameter $1 (optional) - If a revision is given here, collect this Test-CD under this revision number
 source ../../config.inc
-
-if [ "$1" = "" ]; then
-	echo "Please specify the revision number!"
-	exit 1
-fi
 
 cp -R ../../deps modules/optional
 mv -v modules/rostests_disabled modules/rostests
@@ -14,5 +11,7 @@ mv -v modules/rostests_disabled modules/rostests
 ../../configure
 ../../build_reactos bootcdregtest
 
-# FIXME: Only needed for preserved regtesting ISOs. Uses fixed pathes as well..
-mv $ROS_OUTPUT/reactos/bootcdregtest.iso ../../dbgtest_cmake/isos/bootcdregtest-$1.iso
+if [ "$1" != "" ]; then
+	# FIXME: Make this path configurable
+	mv $ROS_OUTPUT/reactos/bootcdregtest.iso ../../dbgtest_cmake/isos/bootcdregtest-$1.iso
+fi
