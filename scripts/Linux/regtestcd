@@ -5,11 +5,21 @@
 # Parameter $1 (optional) - If a revision is given here, collect this Test-CD under this revision number
 source ../../config.inc
 
+rm -rf modules/rostests
 cp -R ../../deps modules/optional
 mv -v modules/rostests_disabled modules/rostests
 
 ../../configure
+ret=$?
+if [ $ret -ne 0 ]; then
+	return $ret
+fi
+
 ../../build_reactos bootcdregtest
+ret=$?
+if [ $ret -ne 0 ]; then
+	return $ret
+fi
 
 if [ "$1" != "" ]; then
 	# FIXME: Make this path configurable
