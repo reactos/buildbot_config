@@ -12,16 +12,18 @@ mv -v modules/rostests_disabled modules/rostests
 ../../configure
 ret=$?
 if [ $ret -ne 0 ]; then
-	return $ret
+	exit $ret
 fi
 
 ../../build_reactos bootcdregtest
 ret=$?
 if [ $ret -ne 0 ]; then
-	return $ret
+	exit $ret
 fi
 
 if [ "$1" != "" ]; then
 	# FIXME: Make this path configurable
 	mv $ROS_OUTPUT/reactos/bootcdregtest.iso ../../dbgtest_cmake/isos/bootcdregtest-$1.iso
 fi
+
+exit 0
