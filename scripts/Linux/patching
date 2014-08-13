@@ -9,20 +9,21 @@ if [ "$1" = "" ]; then
     exit 0
 fi
 
-wget -q --output-document=default.patch "http://jira.reactos.org/secure/attachment/$1/"
+echo "* Downloading patch."
+wget -q --output-document=default.patch "http://jira.reactos.org/secure/attachment/$1/" || exit $?
 
 if ! grep -q "Index:" default.patch; then
     echo "Not a patch file!"
     exit 1
 fi
 
-patch -u -i default.patch -p0 --verbose --dry-run > check.txt
-echo "ERR: $?"
+echo "* Performing a dry-run."
+patch -u -i default.patch -p0 --verbose --dry-run > check.txt || exit $?
 
 if grep -q "FAILED --" check.txt; then
     echo "Applying patch failed!"
     exit 1
 fi
 
+echo "* Applying patch."
 patch -u -i default.patch --verbose -p0
-echo "ERR: $?"
