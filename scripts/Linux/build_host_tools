@@ -1,4 +1,6 @@
 #!/bin/bash
+# ReactOS BuildBot Build Scripts for Linux
+# build_host_tools - Build the host tools
 source ../../config.inc
 
 $TIME bash -c "(

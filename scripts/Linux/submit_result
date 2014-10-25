@@ -1,6 +1,9 @@
 #!/bin/bash
+# ReactOS BuildBot Build Scripts for Linux
+# submit_result - Call Testman's BuildBot Aggregator script to collect the regression-testing output by sysreg.
+#
+# Parameter $1 - BuildBot Build number of the ReactOS build that has been tested.
 source ../../config.inc
-source ../../credentials.inc
 
 if [ "$1" = "" ]; then
 	echo "Please specify the build number!"

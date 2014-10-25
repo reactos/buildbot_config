@@ -4,26 +4,37 @@
 #
 # Parameter $1 - Attachment ID
 
+clean_exit()
+{
+	# Disable rostests again to restore the defined state of our tree
+	mv modules/rostests modules/rostests_disabled 2>/dev/null
+	exit $1
+}
+
 if [ "$1" = "" ]; then
-    echo "Skipping patch phase"
-    exit 0
+	echo "Skipping patch phase"
+	exit 0
 fi
 
 echo "* Downloading patch."
 wget -q --output-document=default.patch "http://jira.reactos.org/secure/attachment/$1/" || exit $?
 
 if ! grep -q "Index:" default.patch; then
-    echo "Not a patch file!"
-    exit 1
+	echo "Not a patch file!"
+	exit 1
 fi
 
+# Let's be able to apply patches to modules/rostests
+mv modules/rostests_disabled modules/rostests 2>/dev/null
+
 echo "* Performing a dry-run."
-patch -u -i default.patch -p0 --verbose --dry-run > check.txt || exit $?
+patch -u -i default.patch -p0 --verbose --dry-run | tee check.txt || clean_exit $?
 
 if grep -q "FAILED --" check.txt; then
-    echo "Applying patch failed!"
-    exit 1
+	echo "Applying patch failed!"
+	clean_exit 1
 fi
 
 echo "* Applying patch."
 patch -u -i default.patch --verbose -p0
+clean_exit $?

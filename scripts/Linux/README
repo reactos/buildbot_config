@@ -26,3 +26,19 @@ Trigger Testbot                          OPTIONAL
 regtest                                               YES       YES
 submit_result                                         YES       YES
 uploadiso                                OPTIONAL
+
+
+Configuration files
+-------------------
+* buildbot.tac - Buildslave configuration file for BuildBot
+* config.inc - Script settings, shared for all builders of this buildslave
+* builder_config.inc - File in the "builddir" of each builder containing per-builder overrides of the config.inc settings
+* sysreg.xml - General Settings for sysreg2
+* reactos.xml - Settings of the VM used by sysreg2 and libvirt
+
+
+Testing these scripts
+---------------------
+You can easily test these scripts as follows:
+  * Move to /srv/buildbot/buildername/build
+  * Run "sudo -u buildbot ../../SCRIPTNAME"
