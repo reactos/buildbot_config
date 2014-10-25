@@ -33,8 +33,10 @@ Configuration files
 * buildbot.tac - Buildslave configuration file for BuildBot
 * config.inc - Script settings, shared for all builders of this buildslave
 * builder_config.inc - File in the "builddir" of each builder containing per-builder overrides of the config.inc settings
-* sysreg.xml - General Settings for sysreg2
-* reactos.xml - Settings of the VM used by sysreg2 and libvirt
+
+Also copy the following files to the "builddir" of each builder and rename them
+* sysreg.xml.template -> sysreg.xml - General Settings for sysreg2
+* reactos.xml.template -> reactos.xml - Settings of the VM used by sysreg2 and libvirt
 
 
 Testing these scripts

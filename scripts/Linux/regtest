@@ -14,5 +14,5 @@ else
 fi
 
 # No more lines after this or we won't get the exit code of sysreg2
-#valgrind --tool=memcheck --leak-check=full ../../sysreg2 ../../sysreg.xml
-../../sysreg2 ../../sysreg.xml
+#valgrind --tool=memcheck --leak-check=full ../../sysreg2 ../sysreg.xml
+../../sysreg2 ../sysreg.xml
