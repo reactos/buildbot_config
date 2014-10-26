@@ -1,0 +1,25 @@
+#!/bin/bash
+# ReactOS BuildBot Build Scripts for Linux
+# vmware_clean - Clean the remainders of a previous VMware session before running regression tests
+#
+# Parameter $1 (optional) - If a revision is given here, this ISO is copied from $REGTESTCD_DIR and tested.
+#                           Otherwise, the last built ISO is tested.
+source ../../config.inc
+
+# Kill the VM if running
+vmrun -T player stop $VMWARE_VMX_FILE 2>&1 >/dev/null
+
+# Kill the serial log
+rm $VMWARE_SERIAL_FILE 2>&1 >/dev/null
+
+# Remove a possible lock on the VMDK file
+rm -rf ${VMWARE_VMDK_FILE}.lck 2>&1 >/dev/null
+
+# Unmount any mounted VMDK
+vmware_mount=`mount | grep /run/vmware/fuse/ | awk '{print $3}'`
+if [ "$vmware_mount" != "" ]; then
+	umount -lf $vmware_mount
+	vmware-mount -X
+fi
+
+exit 0

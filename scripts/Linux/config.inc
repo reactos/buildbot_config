@@ -13,7 +13,7 @@ export ROS_OUTPUT="$WORKDIR/output-MinGW-$ROS_ARCH"
 export PATH="/usr/local/RosBE/$ROS_ARCH/bin:/usr/local/RosBE/bin:$PATH"
 export _ROSBE_VERSION=`cat "/usr/local/RosBE/RosBE-Version"`
 
-# ccache
+# CCache Settings
 CCACHE_MEMORY="4G"
 export CCACHE_HARDLINK=1
 export CCACHE_DIR="/mnt/ramdisk/ccache"
@@ -27,6 +27,11 @@ TESTMAN_PASS="to be overriden in builder_config.inc"
 
 # Upload Settings
 UPLOAD_SUFFIX="to be overriden in builder_config.inc"
+
+# VMware Settings
+VMWARE_SERIAL_FILE="to be overriden in builder_config.inc"
+VMWARE_VMDK_FILE="to be overriden in builder_config.inc"
+VMWARE_VMX_FILE="to be overriden in builder_config.inc"
 
 # Allow additional configuration and overrides in a local per-builder config
 source ../builder_config.inc

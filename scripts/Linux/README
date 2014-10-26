@@ -23,6 +23,7 @@ build_reactos bootcd                     OPTIONAL
 build_reactos livecd                     OPTIONAL
 regtestcd                                OPTIONAL               YES
 Trigger Testbot                          OPTIONAL
+vmware_clean                                          YES       YES             (when using sysreg with VMware)
 regtest                                               YES       YES
 submit_result                                         YES       YES
 uploadiso                                OPTIONAL
