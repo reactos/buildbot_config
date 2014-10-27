@@ -3,14 +3,21 @@
 # Each setting can be overriden in a builder_config.inc
 
 # Constants
+if [ "$OS" = "Windows_NT" ]; then
+	SOURCEDIR=`cygpath -am $PWD`
+else
+	SOURCEDIR="$PWD"
+fi
+
 TIME="../../time"
 export LANG="C"
 
 # Build Settings
+ROSBE_DIR="/usr/local/RosBE"
 WORKDIR="/mnt/ramdisk/buildbot"
 export ROS_ARCH="i386"
 export ROS_OUTPUT="$WORKDIR/output-MinGW-$ROS_ARCH"
-export PATH="/usr/local/RosBE/$ROS_ARCH/bin:/usr/local/RosBE/bin:$PATH"
+export PATH="$ROSBE_DIR/$ROS_ARCH/bin:$ROSBE_DIR/bin:$PATH"
 export _ROSBE_VERSION=`cat "/usr/local/RosBE/RosBE-Version"`
 
 # CCache Settings
@@ -27,6 +34,9 @@ TESTMAN_PASS="to be overriden in builder_config.inc"
 
 # Upload Settings
 UPLOAD_SUFFIX="to be overriden in builder_config.inc"
+
+# VBox Settings
+VBOX_VM_NAME="to be overriden in builder_config.inc"
 
 # VMware Settings
 VMWARE_SERIAL_FILE="to be overriden in builder_config.inc"

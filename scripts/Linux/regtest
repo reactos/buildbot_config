@@ -2,17 +2,27 @@
 # ReactOS BuildBot Build Scripts for Linux
 # regtest - Call sysreg on the desired regression-testing ISO
 #
-# Parameter $1 (optional) - If a revision is given here, this ISO is copied from $REGTESTCD_DIR and tested.
+# Parameter $1 (optional) - If a suffix is given here, this ISO is copied from $REGTESTCD_DIR and tested.
 #                           Otherwise, the last built ISO is tested.
+# Parameter $2 (optional) - By default, ISOs are kept in $REGTESTCD_DIR. If anything is given here, the ISO to be tested
+#                           will be moved out of $REGTESTCD_DIR.
 source ../../config.inc
 
 if [ "$1" = "" ]; then
 	echo "* Got no revision number, testing the last one in the directory."
 else
-	echo "* Testing revision $1."
-	cp $REGTESTCD_DIR/bootcdregtest-$1.iso ../bootcdregtest.iso
+	echo "* Testing bootcdregtest-$1.iso"
+	if [ "$2" = "" ]; then
+		CMD=cp
+	else
+		CMD=mv
+	fi
+	
+	$CMD $REGTESTCD_DIR/bootcdregtest-$1.iso ../bootcdregtest.iso
 fi
 
-# No more lines after this or we won't get the exit code of sysreg2
-#valgrind --tool=memcheck --leak-check=full ../../sysreg2 ../sysreg.xml
-../../sysreg2 ../sysreg.xml
+if [ "$OS" = "Windows_NT" ]; then
+	../../sysreg3 --maxretries 15
+else
+	../../sysreg2 ../sysreg.xml
+fi

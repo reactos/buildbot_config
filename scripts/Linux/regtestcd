@@ -2,7 +2,7 @@
 # ReactOS BuildBot Build Scripts for Linux
 # regtestcd - Enable optional and rostests modules and build a bootcdregtest.
 #
-# Parameter $1 (optional) - If a revision is given here, collect this Test-CD under this revision number
+# Parameter $1 (optional) - Add this suffix to the created Test-CD and collect it in $REGTESTCD_DIR
 source ../../config.inc
 
 cp -R ../../deps modules/optional || exit $?
@@ -12,6 +12,7 @@ mv -v modules/rostests_disabled modules/rostests || exit $?
 ../../build_reactos bootcdregtest || exit $?
 
 if [ "$1" != "" ]; then
+	mkdir $REGTESTCD_DIR 2>&1 >/dev/null
 	mv $ROS_OUTPUT/reactos/bootcdregtest.iso $REGTESTCD_DIR/bootcdregtest-$1.iso
 fi
 

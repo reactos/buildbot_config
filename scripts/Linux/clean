@@ -5,15 +5,14 @@ source ../../config.inc
 
 # Disable additional modules
 rm -rf modules/optional
-rm -rf modules/rostests_disabled
 mv modules/rostests modules/rostests_disabled 2>/dev/null
 
 # Clean the working directory
 if [ -d "$WORKDIR" ]; then
-	cd "$WORKDIR"
-	/usr/local/RosBE/clean.sh
+	echo "* Cleaning $ROS_OUTPUT..."
+	rm -rf "$ROS_OUTPUT"
 else
-	echo "Creating $WORKDIR..."
+	echo "* Creating $WORKDIR..."
 	mkdir "$WORKDIR"
 fi
 

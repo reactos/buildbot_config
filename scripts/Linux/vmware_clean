@@ -1,9 +1,6 @@
 #!/bin/bash
 # ReactOS BuildBot Build Scripts for Linux
 # vmware_clean - Clean the remainders of a previous VMware session before running regression tests
-#
-# Parameter $1 (optional) - If a revision is given here, this ISO is copied from $REGTESTCD_DIR and tested.
-#                           Otherwise, the last built ISO is tested.
 source ../../config.inc
 
 # Kill the VM if running
