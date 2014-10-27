@@ -7,10 +7,10 @@ source ../../config.inc
 vmrun -T player stop $VMWARE_VMX_FILE 2>&1 >/dev/null
 
 # Kill the serial log
-rm $VMWARE_SERIAL_FILE 2>&1 >/dev/null
+rm -f $VMWARE_SERIAL_FILE
 
 # Remove a possible lock on the VMDK file
-rm -rf ${VMWARE_VMDK_FILE}.lck 2>&1 >/dev/null
+rm -rf ${VMWARE_VMDK_FILE}.lck
 
 # Unmount any mounted VMDK
 vmware_mount=`mount | grep /run/vmware/fuse/ | awk '{print $3}'`
