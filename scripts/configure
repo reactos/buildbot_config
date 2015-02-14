@@ -1,5 +1,5 @@
 #!/bin/bash
-# ReactOS BuildBot Build Scripts for Linux
+# ReactOS BuildBot Build Scripts
 # configure - Set up the environment for building and let CMake generate build files.
 source ../../config.inc
 
@@ -13,9 +13,9 @@ $TIME bash -c "(
 
 	cd host-tools
 	rm -f CMakeCache.txt
-	cmake -G 'Ninja' -DARCH=$ROS_ARCH $SOURCEDIR
+	cmake -G 'Ninja' -DARCH:STRING=$ROS_ARCH $SOURCEDIR
 
 	cd ../reactos
 	rm -f CMakeCache.txt
-	cmake -G 'Ninja' -DENABLE_CCACHE=1 -DPCH=0 -DUSE_PSEH3=1 -DCMAKE_TOOLCHAIN_FILE=toolchain-gcc.cmake -DARCH=$ROS_ARCH -DREACTOS_BUILD_TOOLS_DIR=$ROS_OUTPUT/host-tools $SOURCEDIR
+	cmake -G 'Ninja' -DENABLE_CCACHE:BOOL=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-gcc.cmake -DARCH:STRING=$ROS_ARCH -DREACTOS_BUILD_TOOLS_DIR:PATH=$ROS_OUTPUT/host-tools $SOURCEDIR
 )"

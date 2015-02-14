@@ -17,7 +17,7 @@ revert                                                          YES
 source.SVN update for trunk/reactos        YES                  YES
 source.SVN update for trunk/rostests     OPTIONAL               YES
 patching                                                        YES
-configure                                  YES                  YES
+configure (or configure_msvc)              YES                  YES
 build_host_tools                           YES                  YES
 build_reactos bootcd                     OPTIONAL
 build_reactos livecd                     OPTIONAL
