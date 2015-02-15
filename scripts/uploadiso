@@ -1,12 +1,12 @@
 #!/bin/bash
-# ReactOS BuildBot Build Scripts for Linux
+# ReactOS BuildBot Build Scripts
 # uploadiso - Publish the created Boot-CD and Live-CD on iso.reactos.org in compressed files.
 #
 # Parameter $1 - SVN Revision number of the build
 source ../../config.inc
 
 # Some config for accessing iso.reactos.org, but common to all builders
-UPLOAD_KEY="../../ssh_upload.key"
+UPLOAD_KEY="$PWD/../../ssh_upload.key"
 UPLOAD_USER="rosbuild"
 UPLOAD_HOST=$UPLOAD_USER@iso.reactos.org
 UPLOAD_ISODIR="/srv/iso/isostorage"
@@ -19,14 +19,17 @@ if [ "$1" = "" ]; then
 	exit 1
 fi
 
+BOOTCD=0
 if [ -f "$ROS_OUTPUT/reactos/bootcd.iso" ]; then
 	BOOTCD=1
 fi
+
+LIVECD=0
 if [ -f "$ROS_OUTPUT/reactos/livecd.iso" ]; then
 	LIVECD=1
 fi
 
-if [ ! $BOOTCD -eq 1 -a $LIVECD -eq 1 ]; then
+if [ $BOOTCD -eq 0 -a $LIVECD -eq 0 ]; then
 	# nothing to do
 	echo "* There are no ISO files to process."
 	exit 2
@@ -36,7 +39,8 @@ BOOT=bootcd-$1-$UPLOAD_SUFFIX
 LIVE=livecd-$1-$UPLOAD_SUFFIX
 
 echo "* Rsyncing ISO files onto iso.reactos.org..."
-rsync --stats -e "ssh -l $UPLOAD_USER -i $UPLOAD_KEY" -rtvz --include=bootcd.iso --include=livecd.iso --exclude=* $ROS_OUTPUT/reactos/ $UPLOAD_HOST:$UPLOAD_TEMPDIR || exit 1
+cd $ROS_OUTPUT/reactos
+rsync --stats -e "ssh -l $UPLOAD_USER -i $UPLOAD_KEY" -rtvz --include=bootcd.iso --include=livecd.iso --exclude=* . $UPLOAD_HOST:$UPLOAD_TEMPDIR || exit 1
 echo -e "* Done.\n"
 
 if [ $BOOTCD ]; then
