@@ -3,6 +3,7 @@
 # uploadiso - Publish the created Boot-CD and Live-CD on iso.reactos.org in compressed files.
 #
 # Parameter $1 - SVN Revision number of the build
+# Parameter $2 - Attachment ID of the patch file (if this parameter is given, no ISO will be uploaded)
 source ../../config.inc
 
 # Some config for accessing iso.reactos.org, but common to all builders
@@ -17,6 +18,11 @@ SSHOPTS="-l $UPLOAD_USER -i $UPLOAD_KEY $UPLOAD_HOST"
 if [ "$1" = "" ]; then
 	echo "Please specify the revision number!"
 	exit 1
+fi
+
+if [ "$2" != "" ]; then
+	echo "* This is a patched build, so nothing to upload!"
+	exit 0
 fi
 
 BOOTCD=0

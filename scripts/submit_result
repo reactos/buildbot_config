@@ -1,8 +1,10 @@
 #!/bin/bash
-# ReactOS BuildBot Build Scripts for Linux
+# ReactOS BuildBot Build Scripts
 # submit_result - Call Testman's BuildBot Aggregator script to collect the regression-testing output by sysreg.
 #
 # Parameter $1 - BuildBot Build number of the ReactOS build that has been tested.
+# Parameter $2 - Attachment ID of the patch file (this parameter can be evaluated as $ATTACHMENT_ID inside config.inc to set different sourceids for regular and patched builds)
+ATTACHMENT_ID=$2
 source ../../config.inc
 
 if [ "$1" = "" ]; then

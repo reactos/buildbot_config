@@ -1,32 +1,35 @@
-ReactOS BuildBot Build Scripts for Linux
-========================================
+ReactOS BuildBot Build Scripts
+==============================
 
-These scripts can be used for the following types of Buildslaves:
+Some possible usage scenarios for these scripts:
 
-* Plainbot: Can build, in any combination, Boot-CDs, Live-CDs, Test-CDs, trigger Testbots for testing them and upload the created ISO files
-* Testbot:  Triggered by a Plainbot, performs regression testing on a Test-CD and submits the results 
-* Patchbot: Applies a patch, builds a Test-CD, performs regression-testing and submits the results
+* Plainbot: Builds a Boot-CD, Live-CD, Test-CD, triggers a Testbot for testing it and uploads the created ISO file.
+  If a patch ID is given, the patch is applied first, but the build is not uploaded.
+* Testbot:  Triggered by a Plainbot, performs regression testing on a Test-CD and submits the results.
+  Generally, this one is implemented as an independent builder to not block the Plainbot doing its other tasks. But its steps can also be integrated inside a Plainbot.
 
 
-Add the following steps in this order to the Buildmaster's master.cfg depending on what type of Buildslave you want to set up:
+Add the following steps in this order to the Buildmaster's master.cfg depending on what type of Buildslave you want to set up.
+If your Buildslave is more specific, you may as well leave out some steps.
 
-Step                                   | Plainbot | Testbot | Patchbot |
-------------------------------------------------------------------------
-clean                                      YES                  YES
-revert                                                          YES
-source.SVN update for trunk/reactos        YES                  YES
-source.SVN update for trunk/rostests     OPTIONAL               YES
-patching                                                        YES
-configure (or configure_msvc)              YES                  YES
-build_host_tools                           YES                  YES
-build_reactos bootcd                     OPTIONAL
-build_reactos livecd                     OPTIONAL
-regtestcd                                OPTIONAL               YES
-Trigger Testbot                          OPTIONAL
-vmware_clean                                          YES       YES             (when using sysreg with VMware)
-regtest                                               YES       YES
-submit_result                                         YES       YES
-uploadiso                                OPTIONAL
+
+Step                                   | Plainbot | Testbot
+-----------------------------------------------------------
+clean                                       *
+revert                                      *
+source.SVN update for trunk/reactos         *
+source.SVN update for trunk/rostests        *
+patching                                    *
+configure / configure_msvc                  *
+build_host_tools                            *
+build_reactos bootcd                        *
+build_reactos livecd                        *
+regtestcd                                   *
+Trigger Testbot                             *
+vbox_clean / vmware_clean                              *
+regtest                                                *
+submit_result                                          *
+uploadiso                                   *
 
 
 Configuration files

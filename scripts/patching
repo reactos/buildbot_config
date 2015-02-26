@@ -1,8 +1,8 @@
 #!/bin/bash
-# ReactOS BuildBot Build Scripts for Linux
-# patching - Patch the tree with the given JIRA attachment ID to the patch file.
+# ReactOS BuildBot Build Scripts
+# patching - Patch the tree with the given JIRA attachment ID of the patch file.
 #
-# Parameter $1 - Attachment ID
+# Parameter $1 - Attachment ID of the patch file
 
 clean_exit()
 {
