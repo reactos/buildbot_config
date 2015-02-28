@@ -1,0 +1,25 @@
+#!/bin/bash
+# ReactOS BuildBot Build Scripts
+# run_tests - Collect all built tests in a directory and run them using rosautotest
+#
+# Parameter $1 - The build number to submit to the web service
+source ../../config.inc
+
+process_directory()
+{
+	local directory="$1"
+
+	cd $directory
+	for exe in `find -name "*_*.exe" -type f`; do
+		mv $exe $ROSAUTOTEST_DIR
+	done
+}
+
+rm -rf $ROSAUTOTEST_DIR
+mkdir $ROSAUTOTEST_DIR
+
+process_directory $ROS_OUTPUT/reactos/modules/rostests/apitests
+process_directory $ROS_OUTPUT/reactos/modules/rostests/winetests
+
+mv $ROS_OUTPUT/reactos/modules/rostests/rosautotest/rosautotest.exe $WORKDIR
+$WORKDIR/rosautotest.exe /c "Build $1" /w

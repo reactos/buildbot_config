@@ -1,11 +1,16 @@
 #!/bin/bash
-# ReactOS BuildBot Build Scripts for Linux
+# ReactOS BuildBot Build Scripts
 # clean - Get our working copy back to a defined state. (no output, all modules disabled)
+#
+# Parameter $1 (optional) - If this parameter is given, modules are left untouched.
+#                           Only use this for Buildslaves that always build with a module like "rostests" enabled.
 source ../../config.inc
 
-# Disable additional modules
-rm -rf modules/optional
-mv modules/rostests modules/rostests_disabled 2>/dev/null
+if [ "$1" = "" ]; then
+	# Disable additional modules
+	rm -rf modules/optional
+	mv modules/rostests modules/rostests_disabled 2>/dev/null
+fi
 
 # Clean the working directory
 if [ -d "$WORKDIR" ]; then
