@@ -22,4 +22,5 @@ process_directory $ROS_OUTPUT/reactos/modules/rostests/apitests
 process_directory $ROS_OUTPUT/reactos/modules/rostests/winetests
 
 mv $ROS_OUTPUT/reactos/modules/rostests/rosautotest/rosautotest.exe $WORKDIR
+cp ../rosautotest.ini $WORKDIR
 $WORKDIR/rosautotest.exe /c "Build $1" /w
