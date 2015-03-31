@@ -1,9 +1,15 @@
 #!/bin/bash
-# ReactOS BuildBot Build Scripts for Linux
+# ReactOS BuildBot Build Scripts
 # vbox_clean - Clean the remainders of a previous VirtualBox session before running regression tests
 source ../../config.inc
 
 # Kill the VM if running
 VBoxManage controlvm $VBOX_VM_NAME poweroff
+
+# Ensure there is a VirtualBox GUI instance
+instance=`pgrep VirtualBox | wc -l`
+if [ "$instance" -eq "0" ]; then
+	xvfb-run -a /usr/bin/VirtualBox &
+fi
 
 exit 0

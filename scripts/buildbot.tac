@@ -3,7 +3,7 @@ import os
 from twisted.application import service
 from buildslave.bot import BuildSlave
 
-basedir = r'/srv/buildbot_cmake'
+basedir = r'/srv/buildbot'
 rotateLength = 10000000
 maxRotatedFiles = 10
 
