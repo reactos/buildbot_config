@@ -11,8 +11,4 @@ if [ "$instance" -eq "0" ]; then
 	sleep 10s
 fi
 
-# Kill the VM if running
-virsh -c vbox:///session destroy $VBOX_VM_NAME
-virsh -c vbox:///session undefine $VBOX_VM_NAME
-
 exit 0
