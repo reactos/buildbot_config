@@ -11,11 +11,7 @@ process_directory()
 	svn revert "$directory" -R --non-interactive
 
 	# Clean unknown files
-	svn status "$directory" | while read line; do
-		if [ "${line:0:1}" = "?" ]; then
-			echo $line | awk '{print $2}' | xargs rm -rf
-		fi
-	done
+	svn status "$directory" | awk '/^?/{print $2}' | xargs rm -rf
 }
 
 if ! [ -e "$SOURCEDIR/COPYING" ]; then
