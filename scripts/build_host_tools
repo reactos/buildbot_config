@@ -4,6 +4,8 @@
 source ../../config.inc
 
 $TIME bash -c "(
-	cd $ROS_OUTPUT/host-tools
-	ninja
+	if [ -d "$ROS_OUTPUT/host-tools" ]; then
+		cd $ROS_OUTPUT/host-tools
+		ninja
+	fi
 )"
