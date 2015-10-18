@@ -19,7 +19,7 @@ export ROS_ARCH="i386"
 export ROS_OUTPUT="$WORKDIR/output-MinGW-$ROS_ARCH"
 export PATH="$ROSBE_DIR/$ROS_ARCH/bin:$ROSBE_DIR/bin:$PATH"
 export _ROSBE_VERSION=`cat "/usr/local/RosBE/RosBE-Version"`
-export ROS_NO_HOST_TOOLS_REV=99999999
+export ROS_NO_HOST_TOOLS_REV=69060
 
 # CCache Settings
 CCACHE_MEMORY="4G"
