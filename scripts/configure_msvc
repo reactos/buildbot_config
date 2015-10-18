@@ -21,15 +21,17 @@ $TIME bash -c "(
 	cd $ROS_OUTPUT
 	mkdir -p reactos
 
+	EXTRA_ARGS=""
 	if [ "$REVISION_ID" -lt "$ROS_NO_HOST_TOOLS_REV" ]; then
 		mkdir -p host-tools
 		cd host-tools
 		rm -f CMakeCache.txt
 		cmake -G 'Ninja' -DARCH:STRING=$ROS_ARCH $SOURCEDIR
+		EXTRA_ARGS="-DREACTOS_BUILD_TOOLS_DIR:PATH=$ROS_OUTPUT/host-tools"
 		cd ..
 	fi
 
 	cd reactos
 	rm -f CMakeCache.txt
-	cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DREACTOS_BUILD_TOOLS_DIR:PATH="$ROS_OUTPUT/host-tools" -DRUNTIME_CHECKS:BOOL=0 $SOURCEDIR
+	cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DRUNTIME_CHECKS:BOOL=0 $EXTRA_ARGS $SOURCEDIR
 )"
