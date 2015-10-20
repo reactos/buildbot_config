@@ -1,6 +1,8 @@
 #!/bin/bash
 # ReactOS BuildBot Build Scripts
 # configure - Set up the environment for building and let CMake generate build files.
+#
+# Parameter $1 - SVN Revision number of the build
 source ../../config.inc
 
 #
