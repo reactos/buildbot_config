@@ -28,7 +28,7 @@ fi
 mv modules/rostests_disabled modules/rostests 2>/dev/null
 
 echo "* Performing a dry-run."
-patch -u -i default.patch -p0 --verbose --batch --dry-run | tee check.txt || clean_exit $?
+patch --binary -u -i default.patch -p0 --verbose --batch --dry-run | tee check.txt || clean_exit $?
 
 if grep -q "FAILED " check.txt || grep -q "Skipping patch" check.txt; then
 	echo "Applying patch failed!"
@@ -36,5 +36,5 @@ if grep -q "FAILED " check.txt || grep -q "Skipping patch" check.txt; then
 fi
 
 echo "* Applying patch."
-patch -u -i default.patch -p0 --verbose --batch
+patch --binary -u -i default.patch -p0 --verbose --batch
 clean_exit $?
