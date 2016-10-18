@@ -28,13 +28,13 @@ fi
 mv modules/rostests_disabled modules/rostests 2>/dev/null
 
 echo "* Performing a dry-run."
-patch --binary -u -i default.patch -p0 --verbose --batch --dry-run | tee check.txt || clean_exit $?
+svn patch --non-interactive --dry-run default.patch | tee check.txt || clean_exit $?
 
-if grep -q "FAILED " check.txt || grep -q "Skipping patch" check.txt; then
+if grep -q "Summary of conflicts:" check.txt; then
 	echo "Applying patch failed!"
 	clean_exit 1
 fi
 
 echo "* Applying patch."
-patch --binary -u -i default.patch -p0 --verbose --batch
+svn patch --non-interactive default.patch
 clean_exit $?
