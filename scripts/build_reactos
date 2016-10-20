@@ -7,5 +7,5 @@ source ../../config.inc
 
 $TIME bash -c "(
 	cd $ROS_OUTPUT/reactos
-	ninja $@
+	ninja -k 0 $@
 )"
