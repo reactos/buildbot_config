@@ -13,4 +13,5 @@ if [ -d $AHK_DIR ] ; then
 else
 	svn --non-interactive --no-auth-cache --revision $AHK_REV checkout $AHKTESTS_URL $AHK_DIR
 fi
-/bin/cp -a -r -f -v ../Apps ../Tests $AHK_DIR
+rm -rf $AHK_DIR/Apps
+/bin/cp -a -r -f -v ../Apps ../Tests ../Compiler $AHK_DIR
