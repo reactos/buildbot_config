@@ -3,6 +3,7 @@
 # patching - Patch the tree with the given JIRA attachment ID of the patch file.
 #
 # Parameter $1 - Attachment ID of the patch file
+source ../../config.inc
 
 clean_exit()
 {

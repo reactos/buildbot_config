@@ -2,6 +2,7 @@
 # ReactOS BuildBot Build Scripts for Linux
 # Update the ahk tests checkout, copy the apps and the compiled tests
 # Parameter $1 (optional) - SVN Revision number of the AHK tests
+source ../../config.inc
 
 AHKTESTS_URL=https://svn.reactos.org/project-tools/trunk/ahk_tests
 AHK_DIR=modules/AHK_Tests
