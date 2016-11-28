@@ -19,12 +19,12 @@ $TIME bash -c "(
 		mkdir -p host-tools
 		cd host-tools
 		rm -f CMakeCache.txt
-		cmake -G 'Ninja' -DARCH:STRING=$ROS_ARCH $SOURCEDIR
+		cmake -G 'Ninja' -DARCH:STRING=$ROS_ARCH $SOURCEDIR/reactos
 		EXTRA_ARGS="-DREACTOS_BUILD_TOOLS_DIR:PATH=$ROS_OUTPUT/host-tools"
 		cd ..
 	fi
 
 	cd reactos
 	rm -f CMakeCache.txt
-	cmake -G 'Ninja' -DENABLE_CCACHE:BOOL=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-gcc.cmake -DARCH:STRING=$ROS_ARCH $EXTRA_ARGS $SOURCEDIR
+	cmake -G 'Ninja' -DENABLE_CCACHE:BOOL=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-gcc.cmake -DARCH:STRING=$ROS_ARCH $EXTRA_ARGS $SOURCEDIR/reactos
 )"

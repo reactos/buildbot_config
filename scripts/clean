@@ -8,8 +8,8 @@ source ../../config.inc
 
 if [ "$1" = "" ]; then
 	# Disable additional modules
-	rm -rf modules/optional
-	mv modules/rostests modules/rostests_disabled 2>/dev/null
+	rm -f reactos/modules/optional
+	rm -f reactos/modules/rostests
 fi
 
 # Clean the working directory

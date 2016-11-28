@@ -5,11 +5,16 @@
 # Parameter $1 - Attachment ID of the patch file
 source ../../config.inc
 
-clean_exit()
+try_patch()
 {
-	# Disable rostests again to restore the defined state of our tree
-	mv modules/rostests modules/rostests_disabled 2>/dev/null
-	exit $1
+	svn patch --non-interactive --dry-run default.patch | tee check.txt || return 1
+
+	if grep -q "Summary of conflicts:" check.txt; then
+		echo "Applying patch failed!"
+		return 1
+	fi
+	
+	return 0
 }
 
 if [ "$1" = "" ]; then
@@ -25,17 +30,18 @@ if ! grep -q "Index:" default.patch; then
 	exit 1
 fi
 
-# Let's be able to apply patches to modules/rostests
-mv modules/rostests_disabled modules/rostests 2>/dev/null
+echo "* Performing a dry-run relative to SVN directory reactos."
+cd reactos
 
-echo "* Performing a dry-run."
-svn patch --non-interactive --dry-run default.patch | tee check.txt || clean_exit $?
+if not try_patch; then
+	echo "* Performing a dry-run relative to SVN project root."
+	cd ..
+fi
 
-if grep -q "Summary of conflicts:" check.txt; then
+if not try_patch; then
 	echo "Applying patch failed!"
-	clean_exit 1
+	exit 1
 fi
 
 echo "* Applying patch."
 svn patch --non-interactive default.patch
-clean_exit $?

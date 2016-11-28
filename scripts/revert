@@ -20,5 +20,4 @@ if ! [ -e "$SOURCEDIR/COPYING" ]; then
 fi
 
 process_directory "$SOURCEDIR"
-process_directory "$SOURCEDIR/modules/rostests_disabled"
 exit 0

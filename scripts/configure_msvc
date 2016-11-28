@@ -28,12 +28,12 @@ $TIME bash -c "(
 		mkdir -p host-tools
 		cd host-tools
 		rm -f CMakeCache.txt
-		cmake -G 'Ninja' -DARCH:STRING=$ROS_ARCH $SOURCEDIR
+		cmake -G 'Ninja' -DARCH:STRING=$ROS_ARCH $SOURCEDIR/reactos
 		EXTRA_ARGS="-DREACTOS_BUILD_TOOLS_DIR:PATH=$ROS_OUTPUT/host-tools"
 		cd ..
 	fi
 
 	cd reactos
 	rm -f CMakeCache.txt
-	cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DRUNTIME_CHECKS:BOOL=0 $EXTRA_ARGS $SOURCEDIR
+	cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DRUNTIME_CHECKS:BOOL=0 $EXTRA_ARGS $SOURCEDIR/reactos
 )"
