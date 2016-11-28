@@ -33,12 +33,12 @@ fi
 echo "* Performing a dry-run relative to SVN directory reactos."
 cd reactos
 
-if not try_patch; then
+if ! try_patch; then
 	echo "* Performing a dry-run relative to SVN project root."
 	cd ..
 fi
 
-if not try_patch; then
+if ! try_patch; then
 	echo "Applying patch failed!"
 	exit 1
 fi
