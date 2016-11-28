@@ -6,8 +6,8 @@
 # Parameter $2 (optional) - Add this suffix to the created Test-CD and collect it in $REGTESTCD_DIR
 source ../../config.inc
 
-ln -s ../../deps reactos/modules/optional || exit $?
-ln -s rostests reactos/modules/rostests || exit $?
+ln -s $SOURCEDIR/../../deps reactos/modules/optional || exit $?
+ln -s $SOURCEDIR/rostests reactos/modules/rostests || exit $?
 
 ../../configure $1 || exit $?
 ../../build_reactos bootcdregtest || exit $?
