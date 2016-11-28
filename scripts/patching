@@ -7,9 +7,9 @@ source ../../config.inc
 
 try_patch()
 {
-	svn patch --non-interactive --dry-run default.patch | tee check.txt || return 1
+	svn patch --non-interactive --dry-run $SOURCEDIR/default.patch | tee $SOURCEDIR/check.txt || return 1
 
-	if grep -q "Summary of conflicts:" check.txt; then
+	if grep -q "Summary of conflicts:" $SOURCEDIR/check.txt; then
 		echo "Applying patch failed!"
 		return 1
 	fi
@@ -23,19 +23,19 @@ if [ "$1" = "" ]; then
 fi
 
 echo "* Downloading patch."
-wget -q --output-document=default.patch "http://jira.reactos.org/secure/attachment/$1/" || exit $?
+wget -q --output-document=$SOURCEDIR/default.patch "http://jira.reactos.org/secure/attachment/$1/" || exit $?
 
-if ! grep -q "Index:" default.patch; then
+if ! grep -q "Index:" $SOURCEDIR/default.patch; then
 	echo "Not a patch file!"
 	exit 1
 fi
 
 echo "* Performing a dry-run relative to SVN directory reactos."
-cd reactos
+cd $SOURCEDIR/reactos
 
 if ! try_patch; then
 	echo "* Performing a dry-run relative to SVN project root."
-	cd ..
+	cd $SOURCEDIR
 fi
 
 if ! try_patch; then
@@ -44,4 +44,4 @@ if ! try_patch; then
 fi
 
 echo "* Applying patch."
-svn patch --non-interactive default.patch
+svn patch --non-interactive $SOURCEDIR/default.patch
