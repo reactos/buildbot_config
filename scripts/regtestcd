@@ -4,10 +4,14 @@
 #
 # Parameter $1 - SVN Revision number of the build
 # Parameter $2 (optional) - Add this suffix to the created Test-CD and collect it in $REGTESTCD_DIR
+# Parameter without_rostests (optional) - Don't build the regression tests
 source ../../config.inc
 
 ln -s $SOURCEDIR/../../deps reactos/modules/optional || exit $?
-ln -s $SOURCEDIR/rostests reactos/modules/rostests || exit $?
+params="${@}"
+if [ -n "${params##*without_rostests*}" ] ; then
+  ln -s $SOURCEDIR/rostests reactos/modules/rostests || exit $?
+fi
 
 ../../configure $1 || exit $?
 ../../build_reactos bootcdregtest || exit $?
