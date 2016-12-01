@@ -14,7 +14,7 @@ process_directory()
 	svn status "$directory" | awk '/^?/{print $2}' | xargs rm -rf
 }
 
-if ! [ -e "$SOURCEDIR/COPYING" ]; then
+if ! [ -e "$SOURCEDIR/reactos/COPYING" ]; then
     echo "Exiting, no tree checked out"
     exit 0
 fi
