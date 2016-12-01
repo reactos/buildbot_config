@@ -10,7 +10,7 @@ else
 fi
 
 TIME="../../time"
-export LANG="C"
+export LANG="C" LC_ALL=C
 
 # Build Settings
 ROSBE_DIR="/usr/local/RosBE"
