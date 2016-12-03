@@ -5,7 +5,7 @@
 source ../../config.inc
 
 AHKTESTS_URL=https://svn.reactos.org/project-tools/trunk/ahk_tests
-AHK_DIR=modules/AHK_Tests
+AHK_DIR=$PWD/reactos/modules/AHK_Tests
 AHK_REV=HEAD
 
 if [ $# -eq 1 ] ; then AHK_REV=$1 ; fi
@@ -14,5 +14,7 @@ if [ -d $AHK_DIR ] ; then
 else
 	svn --non-interactive --no-auth-cache --revision $AHK_REV checkout $AHKTESTS_URL $AHK_DIR
 fi
-rm -rf $AHK_DIR/Apps
-/bin/cp -a -r -f -v ../Apps ../Tests ../Compiler $AHK_DIR
+rm -fv $AHK_DIR/Apps
+rm -fv $AHK_DIR/Compiler
+ln -s $PWD/../Apps $AHK_DIR/Apps ||exit $?
+ln -s $PWD/../Compiler $AHK_DIR/Compiler ||exit $?
