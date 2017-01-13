@@ -25,11 +25,6 @@ fi
 echo "* Downloading patch."
 wget -q --output-document=$SOURCEDIR/default.patch "http://jira.reactos.org/secure/attachment/$1/" || exit $?
 
-if ! grep -q "Index:" $SOURCEDIR/default.patch; then
-	echo "Not a patch file!"
-	exit 1
-fi
-
 echo "* Performing a dry-run relative to SVN directory reactos."
 cd $SOURCEDIR/reactos
 
