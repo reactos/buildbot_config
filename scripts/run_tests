@@ -1,25 +1,18 @@
 #!/bin/bash
 # ReactOS BuildBot Build Scripts
-# run_tests - Collect all built tests in a directory and run them using rosautotest
+# run_tests - Call the "rostests_install" target to copy all tests to $ROSTESTS_INSTALL and run them using rosautotest
 #
 # Parameter $1 - The build number to submit to the web service
 source ../../config.inc
 
-process_directory()
-{
-	local directory="$1"
+rm -rf $ROSTESTS_INSTALL
+mkdir $ROSTESTS_INSTALL
 
-	for exe in `find $directory -name "*_*.exe" -type f`; do
-		mv $exe $ROSAUTOTEST_DIR
-	done
-}
+cd $ROS_OUTPUT/reactos
+ninja rostests_install
 
-rm -rf $ROSAUTOTEST_DIR
-mkdir $ROSAUTOTEST_DIR
-
-process_directory $ROS_OUTPUT/reactos/modules/rostests/apitests
-process_directory $ROS_OUTPUT/reactos/modules/rostests/winetests
-
-mv $ROS_OUTPUT/reactos/modules/rostests/rosautotest/rosautotest.exe $WORKDIR
-cp ../rosautotest.ini $WORKDIR
-$WORKDIR/rosautotest.exe /c "Build $1" /w
+cd $WORKDIR
+mv $ROS_OUTPUT/reactos/modules/rostests/rosautotest/rosautotest.exe .
+cp $SOURCEDIR/../rosautotest.ini .
+export ROSAUTOTEST_DIR="$ROSTESTS_INSTALL"
+./rosautotest.exe /c "Build $1" /w
