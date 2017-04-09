@@ -7,13 +7,8 @@
 source ../../config.inc
 
 # Some config for accessing iso.reactos.org, but common to all builders
-UPLOAD_KEY="$PWD/../../ssh_upload.key"
-UPLOAD_USER="rosbuild"
-UPLOAD_HOST=$UPLOAD_USER@iso.reactos.org
-UPLOAD_ISODIR="/srv/iso/isostorage"
-UPLOAD_TEMPDIR="/srv/iso/temp/$UPLOAD_SUFFIX"
 SSHOPTS="-l $UPLOAD_USER -i $UPLOAD_KEY $UPLOAD_HOST"
-
+UPLOAD_TEMPDIR="/srv/iso/temp/$UPLOAD_SUFFIX"
 
 if [ "$1" = "" ]; then
 	echo "Please specify the revision number!"

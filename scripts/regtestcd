@@ -1,9 +1,9 @@
 #!/bin/bash
-# ReactOS BuildBot Build Scripts for Linux
+# ReactOS BuildBot Build Scripts
 # regtestcd - Enable optional and rostests modules and build a bootcdregtest.
 #
 # Parameter $1 - SVN Revision number of the build
-# Parameter $2 (optional) - Add this suffix to the created Test-CD and collect it in $REGTESTCD_DIR
+# Parameter $2 (optional) - Add this suffix to the created Test-CD and upload it.
 # Parameter without_rostests (optional) - Don't build the regression tests
 source ../../config.inc
 
@@ -17,8 +17,7 @@ fi
 ../../build_reactos bootcdregtest || exit $?
 
 if [ "$2" != "" ]; then
-	mkdir $REGTESTCD_DIR 2>&1 >/dev/null
-	mv $ROS_OUTPUT/reactos/bootcdregtest.iso $REGTESTCD_DIR/bootcdregtest-$2.iso
+	rsync -e "ssh -l $UPLOAD_USER -i $UPLOAD_KEY" $ROS_OUTPUT/reactos/bootcdregtest.iso $UPLOAD_HOST:$UPLOAD_ISODIR/bootcdregtest/bootcdregtest-$2.iso
 fi
 
 exit 0

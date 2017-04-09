@@ -2,10 +2,7 @@
 # ReactOS BuildBot Build Scripts
 # regtest - Call sysreg on the desired regression-testing ISO
 #
-# Parameter $1            - If a suffix is given here, this ISO is copied from $REGTESTCD_DIR and tested.
-#                           Otherwise, the last built ISO is tested.
-# Parameter $2 (optional) - By default, ISOs are kept in $REGTESTCD_DIR. If anything is given here, the ISO to be tested
-#                           will be moved out of $REGTESTCD_DIR.
+# Parameter $1 - The ISO with this suffix is copied from the ISO storage and tested.
 source ../../config.inc
 
 if [ "$1" = "" ]; then
@@ -13,13 +10,7 @@ if [ "$1" = "" ]; then
 	exit 1
 fi
 
-if [ "$2" = "" ]; then
-	CMD=cp
-else
-	CMD=mv
-fi
-
 echo "* Testing bootcdregtest-$1.iso"
-$CMD $REGTESTCD_DIR/bootcdregtest-$1.iso bootcdregtest.iso
+wget -q --output-document=bootcdregtest.iso "http://$UPLOAD_HOST/bootcdregtest/bootcdregtest-$1.iso" || exit $?
 
 ../../sysreg2 ../sysreg.xml

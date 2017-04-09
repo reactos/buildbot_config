@@ -1,4 +1,4 @@
-# ReactOS BuildBot Build Scripts for Linux
+# ReactOS BuildBot Build Scripts
 # config.inc - Shared settings for all builders
 # Each setting can be overriden in a builder_config.inc
 
@@ -28,13 +28,16 @@ export CCACHE_DIR="/mnt/ramdisk/ccache"
 export CCACHE_SLOPPINESS=time_macros
 
 # Regression Testing Settings
-REGTESTCD_DIR="to be overriden in builder_config.inc"
 TESTMAN_BUILDER="to be overriden in builder_config.inc"
 TESTMAN_ID="to be overriden in builder_config.inc"
 TESTMAN_PASS="to be overriden in builder_config.inc"
 
 # Upload Settings
+UPLOAD_HOST="10.94.0.12"
+UPLOAD_ISODIR="/srv/iso/isostorage"
+UPLOAD_KEY="$PWD/../../ssh_upload.key"
 UPLOAD_SUFFIX="to be overriden in builder_config.inc"
+UPLOAD_USER="rosbuild"
 
 # VBox Settings
 VBOX_VM_NAME="to be overriden in builder_config.inc"
