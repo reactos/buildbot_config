@@ -13,12 +13,9 @@ if [ "$1" = "" ]; then
 fi
 
 # Clean the working directory
-if [ -d "$WORKDIR" ]; then
+if [ -d "$ROS_OUTPUT" ]; then
 	echo "* Cleaning $ROS_OUTPUT..."
 	rm -rf "$ROS_OUTPUT"
-else
-	echo "* Creating $WORKDIR..."
-	mkdir "$WORKDIR"
 fi
 
 exit 0
