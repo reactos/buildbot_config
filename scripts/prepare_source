@@ -1,0 +1,27 @@
+#!/bin/bash
+# ReactOS BuildBot Build Scripts
+# prepare_source - Generate the revision suffix and patch the source if applicable
+#
+# Parameter $1 (optional) - JIRA Attachment ID of the patch file
+source ../../config.inc
+
+# Generate the revision suffix and write it into a file.
+REVISION_SUFFIX=`git describe`
+if [ "$1" != "" ]; then
+	REVISION_SUFFIX+="-patch$1"
+fi
+
+echo "* Revision suffix set to $REVISION_SUFFIX"
+echo $REVISION_SUFFIX > revision_suffix
+
+# Patch the source if applicable
+if [ "$1" = "" ]; then
+	echo "* Skipping patch phase"
+	exit 0
+fi
+
+echo "* Downloading patch."
+wget -q --output-document=default.patch "http://jira.reactos.org/secure/attachment/$1/" || exit $?
+
+echo "* Applying patch."
+git apply default.patch

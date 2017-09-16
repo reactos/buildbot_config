@@ -1,16 +1,7 @@
 #!/bin/bash
 # ReactOS BuildBot Build Scripts
-# clean - Get our working copy back to a defined state. (no output, all modules disabled)
-#
-# Parameter $1 (optional) - If this parameter is given, modules are left untouched.
-#                           Only use this for Buildslaves that always build with a module like "rostests" enabled.
+# clean - Perform all cleanup operations outside the source tree (e.g. the $ROS_OUTPUT build directory)
 source ../../config.inc
-
-if [ "$1" = "" ]; then
-	# Disable additional modules
-	rm -f reactos/modules/optional
-	rm -f reactos/modules/rostests
-fi
 
 # Clean the working directory
 if [ -d "$ROS_OUTPUT" ]; then

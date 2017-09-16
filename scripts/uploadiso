@@ -1,49 +1,40 @@
 #!/bin/bash
 # ReactOS BuildBot Build Scripts
 # uploadiso - Publish the created Boot-CD and Live-CD on iso.reactos.org in compressed files.
-#
-# Parameter $1 - SVN Revision number of the build
-# Parameter $2 - Attachment ID of the patch file (if this parameter is given, no ISO will be uploaded)
 source ../../config.inc
 
 # Some config for accessing iso.reactos.org, but common to all builders
 SSHOPTS="-l $UPLOAD_USER -i $UPLOAD_KEY $UPLOAD_HOST"
 UPLOAD_TEMPDIR="/srv/iso/temp/$UPLOAD_SUFFIX"
 
-if [ "$1" = "" ]; then
-	echo "Please specify the revision number!"
-	exit 1
-fi
+# Get the revision suffix and verify that this is not a patched build.
+REVISION_SUFFIX=`cat revision_suffix`
+case "$REVISION_SUFFIX" in
+	*patch*)
+		echo "* This is a patched build, so nothing to upload!"
+		exit 0
+		;;
+esac
 
-if [ "$2" != "" ]; then
-	echo "* This is a patched build, so nothing to upload!"
-	exit 0
-fi
-
-BOOTCD=0
-if [ -f "$ROS_OUTPUT/reactos/bootcd.iso" ]; then
-	BOOTCD=1
-fi
-
-LIVECD=0
-if [ -f "$ROS_OUTPUT/reactos/livecd.iso" ]; then
-	LIVECD=1
-fi
+# Check what files we have.
+[ -f "$ROS_OUTPUT/bootcd.iso" ] && BOOTCD=1 || BOOTCD=0
+[ -f "$ROS_OUTPUT/livecd.iso" ] && LIVECD=1 || LIVECD=0
 
 if [ $BOOTCD -eq 0 -a $LIVECD -eq 0 ]; then
-	# nothing to do
 	echo "* There are no ISO files to process."
 	exit 2
 fi
 
-BOOT=bootcd-$1-$UPLOAD_SUFFIX
-LIVE=livecd-$1-$UPLOAD_SUFFIX
+# Rsync them onto the file server.
+BOOT=reactos-bootcd-$REVISION_SUFFIX-$UPLOAD_SUFFIX
+LIVE=reactos-livecd-$REVISION_SUFFIX-$UPLOAD_SUFFIX
 
 echo "* Rsyncing ISO files onto iso.reactos.org..."
-cd $ROS_OUTPUT/reactos
+cd $ROS_OUTPUT
 rsync --stats -e "ssh -l $UPLOAD_USER -i $UPLOAD_KEY" -rtvz --include=bootcd.iso --include=livecd.iso --exclude=* . $UPLOAD_HOST:$UPLOAD_TEMPDIR || exit 1
 echo -e "* Done.\n"
 
+# Remotely compress them on the file server and update symbolic links.
 if [ $BOOTCD ]; then
 	echo "* Remotely compressing $BOOT..."
 	ssh $SSHOPTS "ln $UPLOAD_TEMPDIR/bootcd.iso $UPLOAD_TEMPDIR/$BOOT.iso"
@@ -51,9 +42,7 @@ if [ $BOOTCD ]; then
 	ssh $SSHOPTS "rm $UPLOAD_TEMPDIR/$BOOT.iso"
 	ssh $SSHOPTS "mv $UPLOAD_TEMPDIR/$BOOT.7z $UPLOAD_ISODIR/bootcd/"
 	ssh $SSHOPTS "chmod 0644 $UPLOAD_ISODIR/bootcd/$BOOT.7z"
-	ssh $SSHOPTS "rm $UPLOAD_ISODIR/bootcd/latest"
-	ssh $SSHOPTS "ln -s $BOOT.7z $UPLOAD_ISODIR/bootcd/latest"
-	ssh $SSHOPTS "echo $1 > $UPLOAD_ISODIR/bootcd/latest_rev"
+	ssh $SSHOPTS "ln -snf $BOOT.7z $UPLOAD_ISODIR/bootcd/latest-$UPLOAD_SUFFIX"
 else
 	echo "* There is no $BOOT to compress."
 fi
@@ -65,9 +54,7 @@ if [ $LIVECD ]; then
 	ssh $SSHOPTS "rm $UPLOAD_TEMPDIR/$LIVE.iso"
 	ssh $SSHOPTS "mv $UPLOAD_TEMPDIR/$LIVE.7z $UPLOAD_ISODIR/livecd/"
 	ssh $SSHOPTS "chmod 0644 $UPLOAD_ISODIR/livecd/$LIVE.7z"
-	ssh $SSHOPTS "rm $UPLOAD_ISODIR/livecd/latest"
-	ssh $SSHOPTS "ln -s $LIVE.7z $UPLOAD_ISODIR/livecd/latest"
-	ssh $SSHOPTS "echo $1 > $UPLOAD_ISODIR/livecd/latest_rev"
+	ssh $SSHOPTS "ln -snf $LIVE.7z $UPLOAD_ISODIR/livecd/latest-$UPLOAD_SUFFIX"
 else
 	echo "* There is no $LIVE to compress."
 fi

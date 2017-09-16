@@ -8,11 +8,11 @@ source ../../config.inc
 rm -rf $ROSTESTS_INSTALL
 mkdir $ROSTESTS_INSTALL
 
-cd $ROS_OUTPUT/reactos
+cd $ROS_OUTPUT
 ninja rostests_install
 
 cd $WORKDIR
-mv $ROS_OUTPUT/reactos/modules/rostests/rosautotest/rosautotest.exe .
+mv $ROS_OUTPUT/modules/rostests/rosautotest/rosautotest.exe .
 cp $SOURCEDIR/../rosautotest.ini .
 export ROSAUTOTEST_DIR="$ROSTESTS_INSTALL"
 ./rosautotest.exe /c "Build $1" /w

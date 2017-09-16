@@ -2,15 +2,15 @@
 # ReactOS BuildBot Build Scripts
 # regtest - Call sysreg on the desired regression-testing ISO
 #
-# Parameter $1 - The ISO with this suffix is copied from the ISO storage and tested.
+# Parameter $1 (optional) - The ISO with this suffix is copied from the ISO storage and tested.
 source ../../config.inc
 
-if [ "$1" = "" ]; then
-	echo "Please specify the suffix of the ISO to test!"
-	exit 1
+ISONAME="bootcdregtest.iso"
+
+if [ "$1" != "" ]; then
+	ISONAME="reactos-bootcdregtest-$1.iso"
+	wget -q --output-document=bootcdregtest.iso "http://$UPLOAD_HOST/bootcdregtest/$ISONAME" || exit $?
 fi
 
-echo "* Testing bootcdregtest-$1.iso"
-wget -q --output-document=bootcdregtest.iso "http://$UPLOAD_HOST/bootcdregtest/bootcdregtest-$1.iso" || exit $?
-
+echo "* Testing $ISONAME"
 ../../sysreg2 ../sysreg.xml

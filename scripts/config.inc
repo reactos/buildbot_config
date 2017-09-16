@@ -19,7 +19,6 @@ export ROS_ARCH="i386"
 export ROS_OUTPUT="$WORKDIR/output-MinGW-$ROS_ARCH"
 export PATH="$ROSBE_DIR/$ROS_ARCH/bin:$ROSBE_DIR/bin:$PATH"
 export _ROSBE_VERSION=`cat "/usr/local/RosBE/RosBE-Version"`
-export ROS_NO_HOST_TOOLS_REV=69060
 
 # CCache Settings
 CCACHE_MEMORY="4G"
@@ -36,6 +35,7 @@ TESTMAN_PASS="to be overriden in builder_config.inc"
 UPLOAD_HOST="10.94.0.12"
 UPLOAD_ISODIR="/srv/iso/isostorage"
 UPLOAD_KEY="$PWD/../../ssh_upload.key"
+UPLOAD_REGTESTCD=1
 UPLOAD_SUFFIX="to be overriden in builder_config.inc"
 UPLOAD_USER="rosbuild"
 

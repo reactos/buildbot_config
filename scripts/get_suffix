@@ -1,0 +1,7 @@
+#!/bin/bash
+# ReactOS BuildBot Build Scripts
+# get_suffix - Get the combined revision and upload suffix (= the important part of the filename) for a BuildBot SetPropertyFromCommand call.
+source ../../config.inc
+
+REVISION_SUFFIX=`cat revision_suffix`
+echo "$REVISION_SUFFIX-$UPLOAD_SUFFIX"

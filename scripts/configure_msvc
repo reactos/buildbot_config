@@ -2,7 +2,7 @@
 # ReactOS BuildBot Build Scripts
 # configure - Set up the environment for building and let CMake generate build files.
 #
-# Parameter $1 - SVN Revision number of the build
+# Parameters - Additional configuration options directly passed to CMake.
 source ../../config.inc
 
 #
@@ -16,24 +16,8 @@ source ../../config.inc
 #export ROS_OUTPUT="$WORKDIR/output-VS-$ROS_ARCH"
 #
 
-export REVISION_ID=$1
-
 $TIME bash -c "(
 	mkdir -p $ROS_OUTPUT
 	cd $ROS_OUTPUT
-	mkdir -p reactos
-
-	EXTRA_ARGS=""
-	if [ "$REVISION_ID" -lt "$ROS_NO_HOST_TOOLS_REV" ]; then
-		mkdir -p host-tools
-		cd host-tools
-		rm -f CMakeCache.txt
-		cmake -G 'Ninja' -DARCH:STRING=$ROS_ARCH $SOURCEDIR/reactos
-		EXTRA_ARGS="-DREACTOS_BUILD_TOOLS_DIR:PATH=$ROS_OUTPUT/host-tools"
-		cd ..
-	fi
-
-	cd reactos
-	rm -f CMakeCache.txt
-	cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DRUNTIME_CHECKS:BOOL=0 $EXTRA_ARGS $SOURCEDIR/reactos
+	cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DRUNTIME_CHECKS:BOOL=0 $@ $SOURCEDIR
 )"

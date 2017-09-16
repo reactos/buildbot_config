@@ -3,8 +3,9 @@
 # submit_result - Call Testman's BuildBot Aggregator script to collect the regression-testing output by sysreg.
 #
 # Parameter $1 - BuildBot Build number of the ReactOS build that has been tested.
-# Parameter $2 - Attachment ID of the patch file (this parameter can be evaluated as $ATTACHMENT_ID inside config.inc to set different sourceids for regular and patched builds)
-ATTACHMENT_ID=$2
+# Parameter $2 - BuildBot "reason" property.
+# Parameter $3 - JIRA Attachment ID of the patch file (this parameter can be evaluated as $ATTACHMENT_ID inside config.inc to set different sourceids for regular and patched builds)
+ATTACHMENT_ID=$3
 source ../../config.inc
 
 if [ "$1" = "" ]; then
@@ -14,11 +15,13 @@ fi
 
 echo "* Transferring winetest results for build $1."
 echo "* Using builder $TESTMAN_BUILDER."
-TESTMAN_OUT=`wget -q -O - "http://www.reactos.org/testman/webservice/buildbot_aggregator.php?sourceid=$TESTMAN_ID&password=$TESTMAN_PASS&builder=$TESTMAN_BUILDER&platform=0&build=$1"`
-echo "$TESTMAN_OUT"
 
-if [ "$TESTMAN_OUT" != "OK" ]; then
-	exit 1
+COMMENT="Build $1"
+if [ "$ATTACHMENT_ID" != "" ]; then
+	COMMENT+=", ID: $ATTACHMENT_ID, Reason: $2"
 fi
 
-exit 0
+TESTMAN_OUT=`wget -q -O - "https://reactos.org/testman/webservice/buildbot_aggregator.php?sourceid=$TESTMAN_ID&password=$TESTMAN_PASS&builder=$TESTMAN_BUILDER&platform=0&build=$1&comment=$COMMENT"`
+echo "$TESTMAN_OUT"
+
+[ "$TESTMAN_OUT" = "OK" ] && exit 0 || exit 1

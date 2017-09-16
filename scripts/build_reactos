@@ -1,11 +1,11 @@
 #!/bin/bash
-# ReactOS BuildBot Build Scripts for Linux
+# ReactOS BuildBot Build Scripts
 # build_reactos - Build a ReactOS module
 #
 # Parameters - The module(s) to be built, e.g. "bootcd". Directly passed to ninja.
 source ../../config.inc
 
 $TIME bash -c "(
-	cd $ROS_OUTPUT/reactos
+	cd $ROS_OUTPUT
 	ninja -k 0 $@
 )"

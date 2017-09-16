@@ -16,12 +16,9 @@ If your Buildslave is more specific, you may as well leave out some steps.
 Step                                   | Plainbot | Testbot
 -----------------------------------------------------------
 clean                                       *
-revert                                      *
-source.SVN update for trunk/reactos         *
-source.SVN update for trunk/rostests        *
-patching                                    *
+Git update                                  *
+prepare_source                              *
 configure / configure_msvc                  *
-build_host_tools                            *
 build_reactos bootcd                        *
 build_reactos livecd                        *
 regtestcd                                   *

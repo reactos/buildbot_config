@@ -1,11 +1,11 @@
 #!/bin/bash
-# ReactOS BuildBot Build Scripts for Linux
+# ReactOS BuildBot Build Scripts
 # Update the ahk tests checkout, copy the apps and the compiled tests
 # Parameter $1 (optional) - SVN Revision number of the AHK tests
 source ../../config.inc
 
 AHKTESTS_URL=https://svn.reactos.org/project-tools/trunk/ahk_tests
-AHK_DIR=$PWD/reactos/modules/AHK_Tests
+AHK_DIR=$PWD/modules/AHK_Tests
 AHK_REV=HEAD
 
 if [ $# -eq 1 ] ; then AHK_REV=$1 ; fi

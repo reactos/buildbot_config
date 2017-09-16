@@ -1,23 +1,18 @@
 #!/bin/bash
 # ReactOS BuildBot Build Scripts
-# regtestcd - Enable optional and rostests modules and build a bootcdregtest.
+# regtestcd - Build and upload a bootcdregtest
 #
-# Parameter $1 - SVN Revision number of the build
-# Parameter $2 (optional) - Add this suffix to the created Test-CD and upload it.
-# Parameter without_rostests (optional) - Don't build the regression tests
+# Parameters - Additional configuration options directly passed to the configure script.
+#              Unless you run other tests (like AHK tests), you should set this to "-DENABLE_ROSTESTS=1"
 source ../../config.inc
 
-ln -s $SOURCEDIR/../../deps reactos/modules/optional || exit $?
-params="${@}"
-if [ -n "${params##*without_rostests*}" ] ; then
-  ln -s $SOURCEDIR/rostests reactos/modules/rostests || exit $?
-fi
-
-../../configure $1 || exit $?
+ln -s $SOURCEDIR/../../deps modules/optional || exit $?
+../../configure $@ || exit $?
 ../../build_reactos bootcdregtest || exit $?
 
-if [ "$2" != "" ]; then
-	rsync -e "ssh -l $UPLOAD_USER -i $UPLOAD_KEY" $ROS_OUTPUT/reactos/bootcdregtest.iso $UPLOAD_HOST:$UPLOAD_ISODIR/bootcdregtest/bootcdregtest-$2.iso
+if [ $UPLOAD_REGTESTCD ]; then
+	REVISION_SUFFIX=`cat revision_suffix`
+	rsync -e "ssh -l $UPLOAD_USER -i $UPLOAD_KEY" $ROS_OUTPUT/bootcdregtest.iso $UPLOAD_HOST:$UPLOAD_ISODIR/bootcdregtest/reactos-bootcdregtest-$REVISION_SUFFIX-$UPLOAD_SUFFIX.iso
 fi
 
 exit 0
