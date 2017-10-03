@@ -5,11 +5,9 @@
 # Parameters - Additional configuration options directly passed to CMake.
 source ../../config.inc
 
-$TIME bash -c "(
-	mkdir -p $CCACHE_DIR
-	ccache -M $CCACHE_MEMORY
+mkdir -p $CCACHE_DIR
+ccache -M $CCACHE_MEMORY
 
-	mkdir -p $ROS_OUTPUT
-	cd $ROS_OUTPUT
-	cmake -G 'Ninja' -DENABLE_CCACHE:BOOL=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-gcc.cmake -DARCH:STRING=$ROS_ARCH $@ $SOURCEDIR
-)"
+mkdir -p $ROS_OUTPUT
+cd $ROS_OUTPUT
+$TIME cmake -G 'Ninja' -DENABLE_CCACHE:BOOL=1 -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-gcc.cmake -DARCH:STRING=$ROS_ARCH $@ $SOURCEDIR

@@ -16,8 +16,6 @@ source ../../config.inc
 #export ROS_OUTPUT="$WORKDIR/output-VS-$ROS_ARCH"
 #
 
-$TIME bash -c "(
-	mkdir -p $ROS_OUTPUT
-	cd $ROS_OUTPUT
-	cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DRUNTIME_CHECKS:BOOL=0 $@ $SOURCEDIR
-)"
+mkdir -p $ROS_OUTPUT
+cd $ROS_OUTPUT
+$TIME cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DRUNTIME_CHECKS:BOOL=0 $@ $SOURCEDIR

@@ -9,7 +9,7 @@ else
 	SOURCEDIR="$PWD"
 fi
 
-TIME="../../time"
+TIME="$PWD/../../time"
 export LANG="C" LC_ALL=C
 
 # Build Settings
