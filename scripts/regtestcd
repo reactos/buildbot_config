@@ -6,7 +6,7 @@
 #              Unless you run other tests (like AHK tests), you should set this to "-DENABLE_ROSTESTS=1"
 source ../../config.inc
 
-ln -s $SOURCEDIR/../../deps modules/optional || exit $?
+cp -R $SOURCEDIR/../../deps modules/optional || exit $?
 ../../configure $@ || exit $?
 ../../build_reactos bootcdregtest || exit $?
 
