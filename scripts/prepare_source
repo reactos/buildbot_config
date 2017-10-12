@@ -5,6 +5,17 @@
 # Parameter $1 (optional) - JIRA Attachment ID of the patch file
 source ../../config.inc
 
+# Patch the source if applicable
+if [ "$1" != "" ]; then
+	echo "* Downloading patch."
+	wget -q --output-document=default.patch "https://jira.reactos.org/secure/attachment/$1/" || exit $?
+
+	echo "* Applying patch."
+	git apply default.patch || exit $?
+else
+	echo "* Skipping patch phase."
+fi
+
 # Generate the revision suffix and write it into a file.
 REVISION_SUFFIX=`git describe --abbrev=7`
 if [ "$1" != "" ]; then
@@ -14,14 +25,7 @@ fi
 echo "* Revision suffix set to $REVISION_SUFFIX"
 echo $REVISION_SUFFIX > revision_suffix
 
-# Patch the source if applicable
-if [ "$1" = "" ]; then
-	echo "* Skipping patch phase"
-	exit 0
-fi
-
-echo "* Downloading patch."
-wget -q --output-document=default.patch "http://jira.reactos.org/secure/attachment/$1/" || exit $?
-
-echo "* Applying patch."
-git apply default.patch
+# Give detailed information about the latest commit included.
+# This is especially useful when building rebased Pull Requests, whose commits can't be easily identified by their hashes.
+echo "* Latest commit included in the build:"
+git show --quiet
