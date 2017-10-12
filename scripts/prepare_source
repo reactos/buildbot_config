@@ -28,4 +28,4 @@ echo $REVISION_SUFFIX > revision_suffix
 # Give detailed information about the latest commit included.
 # This is especially useful when building rebased Pull Requests, whose commits can't be easily identified by their hashes.
 echo "* Latest commit included in the build:"
-git show --quiet
+git --no-pager show --quiet
