@@ -17,7 +17,7 @@ else
 fi
 
 # Generate the revision suffix and write it into a file.
-REVISION_SUFFIX=`git describe --abbrev=7`
+REVISION_SUFFIX=`git describe --abbrev=7 --long`
 if [ "$1" != "" ]; then
 	REVISION_SUFFIX+="-patch$1"
 fi
