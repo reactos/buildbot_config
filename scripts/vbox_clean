@@ -3,12 +3,21 @@
 # vbox_clean - Clean the remainders of a previous VirtualBox session before running regression tests
 source ../../config.inc
 
-# Ensure there is a VirtualBox GUI instance
-instance=`pgrep VirtualBox | wc -l`
-if [ "$instance" -eq "0" ]; then
-	echo Starting VirtualBox GUI
-	xvfb-run -a /usr/bin/VirtualBox &
-	sleep 10s
-fi
+echo "* Stopping all running VMs"
+VBoxManage list runningvms | awk '{print $2;}' | xargs -I vmid VBoxManage controlvm vmid poweroff
+
+# Kill all Xvfb processes for this user.
+# This will automatically terminate the associated VirtualBox processes too.
+echo "* Killing VirtualBox processes"
+killall Xvfb
+sleep 5s
+
+echo "* Killing VirtualBox processes harder"
+ps axu | grep -i '/usr/lib/virtualbox' | grep -v grep | awk '{print $2}' | xargs kill -9
+sleep 15s
+
+echo "* Starting VirtualBox GUI"
+xvfb-run --listen-tcp --server-num 44 --server-args="-screen 0 1024x768x24" --auth-file /tmp/xvfb.auth -a /usr/bin/VirtualBox &
+sleep 15s
 
 exit 0
