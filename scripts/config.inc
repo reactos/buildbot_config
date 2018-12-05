@@ -32,8 +32,8 @@ TESTMAN_ID="to be overriden in builder_config.inc"
 TESTMAN_PASS="to be overriden in builder_config.inc"
 
 # Upload Settings
-UPLOAD_HOST="10.94.0.12"
-UPLOAD_ISODIR="/srv/iso/isostorage"
+UPLOAD_HOST="10.20.0.9"
+UPLOAD_ISODIR="/srv/www/iso.reactos.org"
 UPLOAD_KEY="$PWD/../../ssh_upload.key"
 UPLOAD_REGTESTCD=1
 UPLOAD_SUFFIX="to be overriden in builder_config.inc"

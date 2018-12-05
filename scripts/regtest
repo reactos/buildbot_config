@@ -9,7 +9,7 @@ ISONAME="bootcdregtest.iso"
 
 if [ "$1" != "" ]; then
 	ISONAME="reactos-bootcdregtest-$1.iso"
-	wget -q --output-document=bootcdregtest.iso "http://$UPLOAD_HOST/bootcdregtest/$ISONAME" || exit $?
+	cp /mnt/bootcdregtest/$ISONAME bootcdregtest.iso || exit $?
 fi
 
 echo "* Testing $ISONAME"

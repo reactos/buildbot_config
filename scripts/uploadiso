@@ -5,7 +5,7 @@ source ../../config.inc
 
 # Some config for accessing iso.reactos.org, but common to all builders
 SSHOPTS="-l $UPLOAD_USER -i $UPLOAD_KEY $UPLOAD_HOST"
-UPLOAD_TEMPDIR="/srv/iso/temp/$UPLOAD_SUFFIX"
+UPLOAD_TEMPDIR="/home/rosbuild/rsync_iso/$UPLOAD_SUFFIX"
 
 # Get the revision suffix and verify that this is not a patched build.
 REVISION_SUFFIX=`cat revision_suffix`

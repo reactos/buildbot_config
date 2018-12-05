@@ -12,7 +12,7 @@ cp -R $SOURCEDIR/../../deps modules/optional || exit $?
 
 if [ $UPLOAD_REGTESTCD ]; then
 	REVISION_SUFFIX=`cat revision_suffix`
-	rsync -e "ssh -l $UPLOAD_USER -i $UPLOAD_KEY" $ROS_OUTPUT/bootcdregtest.iso $UPLOAD_HOST:$UPLOAD_ISODIR/bootcdregtest/reactos-bootcdregtest-$REVISION_SUFFIX-$UPLOAD_SUFFIX.iso
+	cp $ROS_OUTPUT/bootcdregtest.iso /mnt/bootcdregtest/reactos-bootcdregtest-$REVISION_SUFFIX-$UPLOAD_SUFFIX.iso
 fi
 
 exit 0
