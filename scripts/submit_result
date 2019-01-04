@@ -19,6 +19,8 @@ echo "* Using builder $TESTMAN_BUILDER."
 COMMENT="Build $1"
 if [ "$ATTACHMENT_ID" != "" ]; then
 	COMMENT+=", ID: $ATTACHMENT_ID, Reason: $2"
+elif [ "$2" != "" -a "$2" != "None" ]; then
+	COMMENT+=", $2"
 fi
 
 TESTMAN_OUT=`wget -q -O - "https://reactos.org/testman/webservice/buildbot_aggregator.php?sourceid=$TESTMAN_ID&password=$TESTMAN_PASS&builder=$TESTMAN_BUILDER&platform=0&build=$1&comment=$COMMENT"`
