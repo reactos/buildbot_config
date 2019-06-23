@@ -1,0 +1,8 @@
+buildbot==2.3.1
+buildbot-worker==2.3.1
+buildbot-www==2.3.1
+buildbot-console-view==2.3.1
+buildbot-grid-view==2.3.1
+buildbot-waterfall-view==2.3.1
+python-ldap==3.2.0
+treq==18.6.0
