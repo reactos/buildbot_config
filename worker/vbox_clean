@@ -17,7 +17,7 @@ ps axu | grep -i '/usr/lib/virtualbox' | grep -v grep | awk '{print $2}' | xargs
 sleep 15s
 
 echo "* Starting VirtualBox GUI"
-xvfb-run --listen-tcp --server-num 44 --server-args="-screen 0 1024x768x24" --auth-file /tmp/xvfb.auth -a /usr/bin/VirtualBox &
+screen -d -m xvfb-run --listen-tcp --server-num 44 --server-args="-screen 0 1024x768x24" --auth-file /tmp/xvfb.auth -a /usr/bin/VirtualBox
 sleep 15s
 
 exit 0
