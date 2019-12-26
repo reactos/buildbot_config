@@ -1,0 +1,14 @@
+#!/bin/bash
+# ReactOS BuildBot Build Scripts
+# run_rostests - Run the tests built via build_rostests using rosautotest
+#
+# Parameter $1 - The build number
+source ../../config.inc
+
+rm -rf "${ROSAUTOTEST_DIR}"
+mv "${ROSTESTS_PREFIX}-$1" "${ROSAUTOTEST_DIR}"
+
+cd $WORKDIR
+mv ${ROSAUTOTEST_DIR}/rosautotest.exe .
+cp $SOURCEDIR/../rosautotest.ini .
+./rosautotest.exe /c "Build $1" /w
