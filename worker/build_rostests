@@ -11,5 +11,11 @@ rm -rf $ROSTESTS_INSTALL
 mkdir $ROSTESTS_INSTALL
 
 cd $ROS_OUTPUT
+ninja rostests
 ninja rostests_install
+
+# The directory at ROSTESTS_INSTALL shall only contain the test executables to run, but not rosautotest.exe itself.
+# This is why "ninja rostests_install" only builds and copies test executables, and we need to run "ninja rostests" to also get rosautotest built.
+# However, we then need to copy rosautotest.exe somewhere for the "run_rostests" script (which may be run on a different machine). ROSTESTS_INSTALL is the only option here.
+# "run_rostests" will then move rosautotest.exe out of that directory to its final location.
 cp modules/rostests/rosautotest/rosautotest.exe $ROSTESTS_INSTALL
