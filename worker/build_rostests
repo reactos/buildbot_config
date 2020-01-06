@@ -1,15 +1,15 @@
 #!/bin/bash
 # ReactOS BuildBot Build Scripts
-# build_rostests - Build rostests and copy them along with rosautotest.exe to a unique directory identified via the build number
-#
-# Parameter $1 - The build number
+# build_rostests - Build rostests and copy them along with rosautotest.exe to a unique directory identified via the suffix
 source ../../config.inc
 
-export ROSTESTS_INSTALL="${ROSTESTS_PREFIX}-$1"
+REVISION_SUFFIX=`cat revision_suffix`
+export ROSTESTS_INSTALL="${ROSTESTS_PREFIX}-${REVISION_SUFFIX}"
 
 rm -rf $ROSTESTS_INSTALL
 mkdir $ROSTESTS_INSTALL
 
+../../configure -DENABLE_ROSTESTS=1
 cd $ROS_OUTPUT
 ninja rostests_install
 

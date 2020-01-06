@@ -2,7 +2,7 @@
 # ReactOS BuildBot Build Scripts
 # run_rostests - Run the tests built via build_rostests using rosautotest
 #
-# Parameter $1 - The build number
+# Parameter $1 - The suffix of the directory containing the tests to run
 source ../../config.inc
 
 rm -rf "${ROSAUTOTEST_DIR}"
