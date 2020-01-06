@@ -6,9 +6,9 @@
 source ../../config.inc
 
 rm -rf "${ROSAUTOTEST_DIR}"
-mv "${ROSTESTS_PREFIX}-$1" "${ROSAUTOTEST_DIR}"
+mv "${ROSTESTS_PREFIX}-$1" "${ROSAUTOTEST_DIR}" || exit $?
 
 cd $WORKDIR
-mv ${ROSAUTOTEST_DIR}/rosautotest.exe .
-cp $SOURCEDIR/../rosautotest.ini .
+mv ${ROSAUTOTEST_DIR}/rosautotest.exe . || exit $?
+cp $SOURCEDIR/../rosautotest.ini . || exit $?
 ./rosautotest.exe /c "Build $1" /w
