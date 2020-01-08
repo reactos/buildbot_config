@@ -18,7 +18,7 @@ Step                                   | Plainbot | Testbot
 clean                                       *
 Git update                                  *
 prepare_source                              *
-configure / configure_msvc                  *
+configure                                   *
 build_reactos bootcd                        *
 build_reactos livecd                        *
 regtestcd                                   *
