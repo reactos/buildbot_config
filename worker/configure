@@ -19,7 +19,7 @@ source ../../config.inc
 mkdir -p $ROS_OUTPUT
 cd $ROS_OUTPUT
 
-if which cl 2>&1 >/dev/null; then
+if which cl &>/dev/null; then
 	# MSVC environment
 	$TIME cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DRUNTIME_CHECKS:BOOL=0 $@ $SOURCEDIR
 else
