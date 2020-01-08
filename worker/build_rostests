@@ -11,6 +11,7 @@ mkdir -p $ROSTESTS_INSTALL
 
 ../../configure -DENABLE_ROSTESTS=1 || exit $?
 cd $ROS_OUTPUT
+ninja rostests || exit $?
 ninja rostests_install || exit $?
 
 # The directory at ROSTESTS_INSTALL shall only contain the test executables to run, but not rosautotest.exe itself.
