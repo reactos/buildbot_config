@@ -9,11 +9,15 @@ source ../../config.inc
 # Default configuration in config.inc is RosBE/GCC-related
 # MSVC configuration requires overwrites in builder_config.inc like this:
 #
-#export INCLUDE="C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\INCLUDE;C:\Program Files (x86)\Windows Kits\8.1\include\shared;C:\Program Files (x86)\Windows Kits\8.1\include\um"
-#export LIB="C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\LIB;C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86"
-#export LIBPATH="C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\LIB"
-#export PATH="/cygdrive/c/Program Files (x86)/Microsoft Visual Studio 12.0/VC/BIN:/cygdrive/c/Program Files (x86)/Windows Kits/8.1/bin/x86:$ROSBE_DIR/bin:/usr/bin:/cygdrive/c/Windows/System32/wbem:/cygdrive/c/Windows/System32"
+#export ROS_ARCH="i386"
 #export ROS_OUTPUT="$WORKDIR/output-VS-$ROS_ARCH"
+#
+#export INCLUDE="C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.24.28314\\include;C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.18362.0\\ucrt;C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.18362.0\\shared;C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.18362.0\\um"
+#export LIB="C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.24.28314\\lib\\x86;C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.18362.0\\ucrt\\x86;C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.18362.0\\um\\x86"
+#export LIBPATH="C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.24.28314\\lib\\x86"
+#export PATH="/cygdrive/c/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.24.28314/bin/HostX86/x86:/cygdrive/c/Program Files (x86)/Windows Kits/10/bin/10.0.18362.0/x86:/cygdrive/c/Program Files (x86)/Windows Kits/10/bin/x86:$ROSBE_DIR/bin:/cygdrive/c/Program Files/Git/cmd:/usr/bin:/cygdrive/c/Windows/System32/wbem:/cygdrive/c/Windows/System32"
+#export VCINSTALLDIR="C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\"
+#export VCToolsInstallDir="C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.24.28314\\"
 #
 
 mkdir -p $ROS_OUTPUT
