@@ -26,4 +26,4 @@ fi
 TESTMAN_OUT=`wget -q -O - "https://reactos.org/testman/webservice/buildbot_aggregator.php?sourceid=$TESTMAN_ID&password=$TESTMAN_PASS&builder=$TESTMAN_BUILDER&platform=0&build=$1&comment=$COMMENT"`
 echo "$TESTMAN_OUT"
 
-[ "$TESTMAN_OUT" = "OK" ] && exit 0 || exit 1
+[ "$TESTMAN_OUT" =~ ^OK\.\sTest_id\:\s\d+$ ] && exit 0 || exit 1
