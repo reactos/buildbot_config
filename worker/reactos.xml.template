@@ -1,7 +1,7 @@
 <domain type='kvm'>
-  <name>ReactOS-CMake</name>
+  <name>Test_KVM</name>
   <uuid>0ab69219-58c2-1e5c-6beb-fb29db74b0af</uuid>
-  <memory>524288</memory>
+  <memory>1048576</memory>
   <vcpu>1</vcpu>
   <os>
     <type arch='i686' machine='pc'>hvm</type>
@@ -17,11 +17,11 @@
   <devices>
     <emulator>/usr/bin/kvm</emulator>
     <disk type='file' device='disk'>
-      <source file='/srv/buildbot_cmake/ros-sysreg.img'/>
+      <source file='/srv/buildbot/worker_data/Test_KVM/build/ros-sysreg.img'/>
       <target dev='hda' bus='ide'/>
     </disk>
     <disk type='file' device='cdrom'>
-      <source file='/srv/buildbot_cmake/dbgtest_cmake/bootcdregtest.iso'/>
+      <source file='/srv/buildbot/worker_data/Test_KVM/build/bootcdregtest.iso'/>
       <target dev='hdc' bus='ide'/>
       <readonly/>
     </disk>
@@ -29,22 +29,13 @@
       <mac address='00:16:3e:2e:dd:de'/>
       <model type='pcnet'/>
     </interface>
-<!--    <serial type='pty'>
-      <source path='/dev/pts/4'/>
-      <target port='1'/>
-    </serial> -->
     <console type='pty' tty='/dev/pts/4'>
       <source path='/dev/pts/4'/>
       <target port='1'/>
     </console>
-
-    <!-- Disabled as of 2011-06-07 because of r52098, ask Colin for details
-    <sound model='ac97'/-->
-
-    <!-- Disabled as of 2011-10-16, ask Amine or Cameron for details
-    <input type='tablet' bus='usb'/-->
-
     <input type='mouse' bus='ps2'/>
-    <graphics type='vnc' autoport='no' port='5900' listen='127.0.0.1' passwd='PASSWORD_HERE' />
+    <graphics type='vnc' autoport='no' port='5900' listen='127.0.0.1' />
+    <controller type='usb' model='none'/>
+    <memballoon model='none'/>
   </devices>
 </domain>

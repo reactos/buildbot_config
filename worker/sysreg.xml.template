@@ -1,4 +1,4 @@
-<settings vm="ReactOS-CMake" file="/srv/buildbot_cmake/reactos.xml">
+<settings vm="Test_KVM" file="/srv/buildbot/worker_data/Test_KVM/reactos.xml">
 	<general>
 		<!-- Use KVM, VMwarePlayer or VMwareGSX -->
 		<vm type="kvm"/>
@@ -11,14 +11,14 @@
 		<globaltimeout s="3600"/>
 
 		<!-- size of the hdd image in MB -->
-		<hdd size="2048"/>
+		<hdd size="5120"/>
 
 		<!-- Maximum number of line cache hits allowed before we cancel this test and proceed with the next one.
 		See "console.c" code for more details. -->
 		<maxcachehits value="2000" />
 
 		<!-- Maximum number of retries allowed before we cancel the entire testing process. -->
-		<maxretries value="15" />
+		<maxretries value="10" />
 	</general>
 	<firststage bootdevice="cdrom">
 	</firststage>
