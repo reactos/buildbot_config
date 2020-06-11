@@ -13,12 +13,12 @@ TIME="$PWD/../../time"
 export LANG="C" LC_ALL=C
 
 # Build Settings
-ROSBE_DIR="/usr/local/RosBE"
+ROSBE_DIR="/usr/RosBE"
 WORKDIR="/mnt/ramdisk/buildbot"
 export ROS_ARCH="i386"
 export ROS_OUTPUT="$WORKDIR/output-MinGW-$ROS_ARCH"
 export PATH="$ROSBE_DIR/$ROS_ARCH/bin:$ROSBE_DIR/bin:$PATH"
-export _ROSBE_VERSION=`cat "/usr/local/RosBE/RosBE-Version"`
+export _ROSBE_VERSION=`cat "$ROSBE_DIR/RosBE-Version"`
 
 # CCache Settings
 CCACHE_MEMORY="4G"
