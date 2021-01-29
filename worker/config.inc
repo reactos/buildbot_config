@@ -15,6 +15,7 @@ export LANG="C" LC_ALL=C
 # Build Settings
 ROSBE_DIR="/usr/RosBE"
 WORKDIR="/mnt/ramdisk/buildbot"
+export BISON_PKGDATADIR="$ROSBE_DIR/share/bison"
 export ROS_ARCH="i386"
 export ROS_OUTPUT="$WORKDIR/output-MinGW-$ROS_ARCH"
 export PATH="$ROSBE_DIR/$ROS_ARCH/bin:$ROSBE_DIR/bin:$PATH"
