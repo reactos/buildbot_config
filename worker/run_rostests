@@ -12,3 +12,7 @@ cd $WORKDIR
 mv ${ROSAUTOTEST_DIR}/rosautotest.exe . || exit $?
 cp $SOURCEDIR/../rosautotest.ini . || exit $?
 ./rosautotest.exe /c "Build $1" /w
+
+# Initiate a graceful shutdown of the BuildBot worker, which in turn
+# initiates a graceful reboot of the Windows VM.
+touch $SOURCEDIR/../../shutdown.stamp

@@ -32,7 +32,7 @@ keepalive = 600
 umask = 0o22
 maxdelay = 300
 numcpus = None
-allow_shutdown = None
+allow_shutdown = 'file'
 maxretries = None
 
 s = Worker(buildmaster_host, port, workername, passwd, basedir,
