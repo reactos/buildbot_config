@@ -3,6 +3,7 @@
 # run_rostests - Run the tests built via build_rostests using rosautotest
 #
 # Parameter $1 - The suffix of the directory containing the tests to run
+# Parameter $2 - The reason for running the tests
 source ../../config.inc
 
 rm -rf "${ROSAUTOTEST_DIR}"
@@ -11,7 +12,7 @@ mv "${ROSTESTS_PREFIX}-$1" "${ROSAUTOTEST_DIR}" || exit $?
 cd $WORKDIR
 mv ${ROSAUTOTEST_DIR}/rosautotest.exe . || exit $?
 cp $SOURCEDIR/../rosautotest.ini . || exit $?
-./rosautotest.exe /c "Build $1" /w
+./rosautotest.exe /c "Build $1 $2" /w
 
 # Initiate a graceful shutdown of the BuildBot worker, which in turn
 # initiates a graceful reboot of the Windows VM.
