@@ -5,22 +5,25 @@
 # Parameter $1 - BuildBot Build number of the ReactOS build that has been tested.
 # Parameter $2 - BuildBot "reason" property.
 # Parameter $3 - JIRA Attachment ID of the patch file (this parameter can be evaluated as $ATTACHMENT_ID inside config.inc to set different sourceids for regular and patched builds)
-ATTACHMENT_ID=$3
+BUILDNO="$1"
+REASON="$2"
+ATTACHMENT_ID="$3"
 source ../../config.inc
 
-if [ "$1" = "" ]; then
+if [ "${BUILDNO}" = "" ]; then
 	echo "Please specify the build number!"
 	exit 1
 fi
 
-echo "* Transferring winetest results for build $1."
+echo "* Transferring winetest results for build ${BUILDNO}."
 echo "* Using builder $TESTMAN_BUILDER."
 
-COMMENT="Build $1"
-if [ "$ATTACHMENT_ID" != "" ]; then
-	COMMENT+=", ID: $ATTACHMENT_ID, Reason: $2"
-elif [ "$2" != "" -a "$2" != "None" ]; then
-	COMMENT+=", $2"
+COMMENT="Build ${BUILDNO}"
+if [ "${ATTACHMENT_ID}" != "" ]; then
+	COMMENT+=", ID: ${ATTACHMENT_ID}"
+fi
+if [ "${REASON}" != "" -a "${REASON}" != "None" ]; then
+	COMMENT+=", Reason: ${REASON}"
 fi
 
 TESTMAN_OUT=`wget -q -O - "https://reactos.org/testman/webservice/buildbot_aggregator.php?sourceid=$TESTMAN_ID&password=$TESTMAN_PASS&builder=$TESTMAN_BUILDER&platform=0&build=$1&comment=$COMMENT"`
