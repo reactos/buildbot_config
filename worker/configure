@@ -25,6 +25,11 @@ cd $ROS_OUTPUT
 
 if which cl &>/dev/null; then
 	# MSVC environment
+	if [ "$ROS_ARCH" = "amd64" ]; then
+		export VSCMD_ARG_HOST_ARCH="x64"
+		export VSCMD_ARG_TGT_ARCH="x64"
+	fi
+
 	$TIME cmake -G 'Ninja' -DCMAKE_TOOLCHAIN_FILE:FILEPATH=toolchain-msvc.cmake -DARCH:STRING=$ROS_ARCH -DRUNTIME_CHECKS:BOOL=0 $@ $SOURCEDIR
 else
 	# GCC environment
