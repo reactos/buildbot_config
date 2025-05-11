@@ -1,3 +1,2 @@
-buildbot[bundle,tls]==2.7.0
-python-ldap==3.2.0
-treq==20.3.0
+buildbot[bundle,tls]==4.2.1
+python-ldap==3.4.4
