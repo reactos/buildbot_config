@@ -3,7 +3,7 @@ ReactOS BuildBot Build Scripts
 
 Some possible usage scenarios for these scripts:
 
-* Plainbot: Builds a Boot-CD, Live-CD, Test-CD, triggers a Testbot for testing it and uploads the created ISO file.
+* Plainbot: Builds a Boot-CD, a Test-CD, and triggers a Testbot for testing it and uploads the created ISO files.
   If a patch ID is given, the patch is applied first, but the build is not uploaded.
 * Testbot:  Triggered by a Plainbot, performs regression testing on a Test-CD and submits the results.
   Generally, this one is implemented as an independent builder to not block the Plainbot doing its other tasks. But its steps can also be integrated inside a Plainbot.
@@ -20,7 +20,6 @@ Git update                                  *
 prepare_source                              *
 configure                                   *
 build_reactos bootcd                        *
-build_reactos livecd                        *
 regtestcd                                   *
 Trigger Testbot                             *
 vbox_clean / vmware_clean                              *

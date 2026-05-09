@@ -1,6 +1,6 @@
 #!/bin/bash
 # ReactOS BuildBot Build Scripts
-# uploadiso - Publish the created Boot-CD and Live-CD on iso.reactos.org in compressed files.
+# uploadiso - Publish the created Boot-CD on iso.reactos.org in compressed files.
 source ../../config.inc
 
 # Some config for accessing iso.reactos.org, but common to all builders
@@ -18,20 +18,18 @@ esac
 
 # Check what files we have.
 [ -f "$ROS_OUTPUT/bootcd.iso" ] && BOOTCD=1 || BOOTCD=0
-[ -f "$ROS_OUTPUT/livecd.iso" ] && LIVECD=1 || LIVECD=0
 
-if [ $BOOTCD -eq 0 -a $LIVECD -eq 0 ]; then
+if [ $BOOTCD -eq 0 ]; then
 	echo "* There are no ISO files to process."
 	exit 2
 fi
 
 # Rsync them onto the file server.
 BOOT=reactos-bootcd-$REVISION_SUFFIX-$UPLOAD_SUFFIX
-LIVE=reactos-livecd-$REVISION_SUFFIX-$UPLOAD_SUFFIX
 
 echo "* Rsyncing ISO files onto iso.reactos.org..."
 cd $ROS_OUTPUT
-rsync --stats -e "ssh -l $UPLOAD_USER -i $UPLOAD_KEY" -rtvz --include=bootcd.iso --include=livecd.iso --exclude=* . $UPLOAD_HOST:$UPLOAD_TEMPDIR || exit 1
+rsync --stats -e "ssh -l $UPLOAD_USER -i $UPLOAD_KEY" -rtvz --include=bootcd.iso --exclude=* . $UPLOAD_HOST:$UPLOAD_TEMPDIR || exit 1
 echo -e "* Done.\n"
 
 # Remotely compress them on the file server and update symbolic links.
@@ -45,16 +43,4 @@ if [ $BOOTCD ]; then
 	ssh $SSHOPTS "ln -snf $BOOT.7z $UPLOAD_ISODIR/bootcd/latest-$UPLOAD_SUFFIX"
 else
 	echo "* There is no $BOOT to compress."
-fi
-
-if [ $LIVECD ]; then
-	echo "* Remotely compressing $LIVE..."
-	ssh $SSHOPTS "ln $UPLOAD_TEMPDIR/livecd.iso $UPLOAD_TEMPDIR/$LIVE.iso"
-	ssh $SSHOPTS "7za a -bd -t7z $UPLOAD_TEMPDIR/$LIVE.7z $UPLOAD_TEMPDIR/$LIVE.iso -mx9 | tail -n +4"
-	ssh $SSHOPTS "rm $UPLOAD_TEMPDIR/$LIVE.iso"
-	ssh $SSHOPTS "mv $UPLOAD_TEMPDIR/$LIVE.7z $UPLOAD_ISODIR/livecd/"
-	ssh $SSHOPTS "chmod 0644 $UPLOAD_ISODIR/livecd/$LIVE.7z"
-	ssh $SSHOPTS "ln -snf $LIVE.7z $UPLOAD_ISODIR/livecd/latest-$UPLOAD_SUFFIX"
-else
-	echo "* There is no $LIVE to compress."
 fi
