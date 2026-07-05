@@ -52,6 +52,10 @@ else
 fi
 
 if [ $REGTESTCD ]; then
+	# Cleanup ISOs/7z archives in the remote /temp/ folder that are older than 1 week.
+	echo "* Remotely cleaning old bootcdregtest ISOs..."
+	ssh $SSHOPTS "find $UPLOAD_ISODIR/temp/ -mindepth 1 -maxdepth 1 '(' -name \"*.iso\" -o -name \"*.7z\" ')' -type f -mtime +7 -delete"
+
 	echo "* Remotely compressing $REGT..."
 	ssh $SSHOPTS "ln $UPLOAD_TEMPDIR/bootcdregtest.iso $UPLOAD_TEMPDIR/$REGT.iso"
 	ssh $SSHOPTS "7za a -bd -t7z $UPLOAD_TEMPDIR/$BOOT.7z $UPLOAD_TEMPDIR/$REGT.iso -mx9 | tail -n +4"
