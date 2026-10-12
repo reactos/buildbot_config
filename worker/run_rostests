@@ -8,10 +8,16 @@
 SUFFIX="$1"
 BUILDNO="$2"
 REASON="$3"
-source ../../config.inc
+source ../../config.inc || exit $?
 
-rm -rf "${ROSAUTOTEST_DIR}"
-mv "${ROSTESTS_PREFIX}-${SUFFIX}" "${ROSAUTOTEST_DIR}" || exit $?
+# Older style, Kept for now!
+# mv "${ROSTESTS_PREFIX}-${SUFFIX}" "${ROSAUTOTEST_DIR}" || exit $?
+
+FETCH_DEST="${ROSAUTOTEST_DIR}"
+if [ "$OS" = "Windows_NT" ]; then
+	FETCH_DEST=`cygpath -w "${ROSAUTOTEST_DIR}"`
+fi
+python -u "$(dirname "$0")/fetch_tests.py" "$(basename -- "${ROSTESTS_PREFIX}-${SUFFIX}")" "${FETCH_DEST}" || exit $?
 
 cd $WORKDIR
 mv ${ROSAUTOTEST_DIR}/rosautotest.exe . || exit $?
