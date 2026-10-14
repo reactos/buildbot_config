@@ -18,12 +18,28 @@ fi
 echo "* Transferring winetest results for build ${BUILDNO}."
 echo "* Using builder $TESTMAN_BUILDER."
 
+# Percent-encode a value for use in a query string.
+# The reason is free text (e.g. "PR #1234: ..."), so a '#' would otherwise start the URL fragment
+# and cut off the rest, and a '&' or '+' would corrupt the parameters.
+urlencode() {
+	local LC_ALL=C
+	local str="$1" out="" c i
+	for (( i = 0; i < ${#str}; i++ )); do
+		c="${str:i:1}"
+		case "$c" in
+			[a-zA-Z0-9.~_-]) out+="$c" ;;
+			*) printf -v c '%%%02X' "'$c"; out+="$c" ;;
+		esac
+	done
+	printf '%s' "$out"
+}
+
 COMMENT="Build ${BUILDNO}"
 if [ "${ATTACHMENT_ID}" != "" ]; then
 	COMMENT+=", ID: ${ATTACHMENT_ID}"
 fi
 if [ "${REASON}" != "" -a "${REASON}" != "None" ]; then
-	COMMENT+=", Reason: ${REASON}"
+	COMMENT+=", Reason: $(urlencode "${REASON}")"
 fi
 
 TESTMAN_OUT=`wget -q -O - "https://reactos.org/testman/webservice/buildbot_aggregator.php?sourceid=$TESTMAN_ID&password=$TESTMAN_PASS&builder=$TESTMAN_BUILDER&platform=0&build=$1&comment=$COMMENT"`
